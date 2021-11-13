@@ -8,7 +8,7 @@ const DashboardHome = () => {
     const [orders, setOrders] = useState();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/allorders?email=${user.email}`)
+        fetch(`https://dry-atoll-55407.herokuapp.com/allorders?email=${user.email}`)
             .then(res => res.json())
             .then(data => setOrders(data))
     }, [user, orders])
@@ -17,7 +17,7 @@ const DashboardHome = () => {
     const handleOrderCancel = (orderId) => {
         const confirmationForDelete = window.confirm("Are you sure you want to cancel this order?");
         if (confirmationForDelete) {
-            fetch(`http://localhost:5000/cancel?orderId=${orderId}`, {
+            fetch(`https://dry-atoll-55407.herokuapp.com/cancel?orderId=${orderId}`, {
                 method: 'DELETE'
             })
         }

@@ -19,7 +19,7 @@ const BicycleDetails = () => {
     const priceRef = useRef();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/explore/${id}`)
+        fetch(`https://dry-atoll-55407.herokuapp.com/explore/${id}`)
             .then(res => res.json())
             .then(data => setBicycle(data))
     }, [])
@@ -38,7 +38,7 @@ const BicycleDetails = () => {
             purchasedOn: purchasedDate,
             price: priceValue
         }
-        fetch('http://localhost:5000/order', {
+        fetch('https://dry-atoll-55407.herokuapp.com/order', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

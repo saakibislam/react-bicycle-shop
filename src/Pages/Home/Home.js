@@ -9,7 +9,7 @@ const Home = () => {
     const [bicycles, setBicycles] = useState();
 
     useEffect(() => {
-        fetch('http://localhost:5000/explore')
+        fetch('https://dry-atoll-55407.herokuapp.com/explore')
             .then(res => res.json())
             .then(data => setBicycles(data.slice(0, 4)))
     }, [])
