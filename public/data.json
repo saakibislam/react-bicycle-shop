@@ -1,0 +1,62 @@
+[
+    {
+        "img": "https://www.globalbrandsmagazine.com/wp-content/uploads/2020/05/bicycle-159680_1280-1.jpg",
+        "name": "Trek Bicycle Corporation",
+        "description": "Trek got its start in Waterloo, Wisconsin in 1976. According to CNBC, it is the largest bike brand based in the US. Although most of it production has moved overseas, the company still produces some bikes in the US. As of 2014, it was making about 25,000 bicycles domestically each year, which amounted to about half of all bikes produced in the US.",
+        "price": 200
+    },
+    {
+        "img": "https://embed.widencdn.net/img/dorelrl/xznidyeeil/2000px@1x/C19_C24609M_ScalpelSiAl_6_AGR_PD.png",
+        "name": "Connondale",
+        "description": "Cannondale is another top bike brand that dates back to the 1970s. While two buddies founded Trek over a glass of beer, Cannonade was birthed over a pickle factory in Connecticut. At first, the company didn’t make bikes but instead produced a bike trailer, accessories and apparel.",
+        "price": 289
+    },
+    {
+        "img": "https://images.konaworld.com/2021/med/process_x_dl.jpg",
+        "name": "Kona Bikes",
+        "description": "Kona Bikes is a relative newcomer. The brand was started in 1988 by Dan Gerhard and Jacob Heilbron. The pair continues to own the brand today and it remains to be based out of the Pacific Northwest. Kona’s claim to fame is being the first company to produce a straight leg mountain bike production fork. The brand worked with Brodie (aka  Bruce Spicer) to develop the bike style. Currently, Kona has 10 versions of the fork, made for mountain bikes and asphalt bikes of various sizes.",
+        "price": 279
+    },
+    {
+        "img": "https://www.colnago.com/wp-content/uploads/2019/03/E64_grigia.jpg",
+        "name": "Colnago",
+        "description": "Colnago is a bike company based in Italy. The bran dates back to 1952 when Ernesto Colnago founded it in Cambiago. Ernesto Colnago was initially expected to take over his family’s farming business but pursued a career in cycling from a young age. At 13, he was the apprentice at a bike company and eventually opened his shop.",
+        "price": 269
+    },
+    {
+        "img": "https://www.bianchi.com/wp-content/uploads/2019/07/YPB01I5K.jpg",
+        "name": "Bianchi",
+        "description": "Another Italian bike brand, Bianchi has the distinct honor of being the oldest continually operated cycling company in the world. It dates back to 1885 when 21 year old Eldoardo Bianchi took it upon himself to add a chain to the famous “ordinary” bicycles and to reduce the size of the front wheel.",
+        "price": 259
+    },
+    {
+        "img": "https://media.raleighusa.com/catalog/product/1000x1500/RALEIGH-4310/raleigh-4310-tekoa-3-2020-17060-web-profile.jpg",
+        "name": "Raleigh",
+        "description": "Raleigh Bikes is a British cycling brand that got started in 1887 making it one of the oldest bike brands out there. At the time, the brand produced around three bikes per week. As early as 1896, production had increased to 30,000 cycles per year.",
+        "price": 249
+    },
+    {
+        "img": "https://www.cervelo.com/media/catalog/product/cache/ef935f058ac986049d339021d5b68b26/m/y/my21_caledonia_105_indigo.jpg",
+        "name": "Cervleo",
+        "description": "Cervelo is another relatively young bike brand. It got started in 1995 in Canada. The goal of the company is simple: It aims to design the world’s fastest bike. To that end, its probably not a brand that you’re going to check out if you’re new to cycling or if you’re looking for a bike for commuting or occasional use.",
+        "price": 239
+    },
+    {
+        "img": "https://www.orbea.com/img/products/landings-submarca/claim-video/orca_2021_maicrosite.png",
+        "name": "Orbea",
+        "description": "Orbea is a Spanish bike company that began life in 1840 as a rifle company. It didn’t start to make cycles until the 1930s. It employed thousands of Spanish citizens during the era of Civil War and was eventually bought by its employees and turned into a cooperative in the early 1960s.",
+        "price": 229
+    },
+    {
+        "img": "https://www.bmc-switzerland.com/media/catalog/product/cache/86a9a13297e2ff4b2d593e234876b106/b/m/bmc_product_page_product_images_teamelite_01_one_my20.png",
+        "name": "BMC Switzerland",
+        "description": "As you might guess from the name, BMC Switzerland has its headquarters in Switzerland. The company began in 1994 and currently has around 120 employees around the world. BMC supplied bikes to the Phonak Cycling Team, a Swiss team that was overseen by Andy Rihs. Rihs eventually took over the entire company in 2000.",
+        "price": 219
+    },
+    {
+        "img": "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-zoom-img//master/bikes/2020/ONE-TWENTY_7_400_grnblk_MY2020.tif?p3",
+        "name": "Merida",
+        "description": "The founder of Merida Bikes, Ike Tseng, got the idea for the company on a visit to the US in the early 1970s. Tsung went to bike shop and found a note there stating that the repair shop wouldn’t work on any bikes produced in Taiwan, due to the low quality of those cycles.",
+        "price": 211
+    }
+]
