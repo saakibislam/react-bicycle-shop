@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { Alert, Container, Form, Spinner } from 'react-bootstrap';
-import { useHistory, useLocation } from 'react-router';
+import { Alert, Container, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import Footer from '../Shared/Footer/Footer';
 import Navigation from '../Shared/Navigation/Navigation';
+import { CDBSpinner, CDBContainer } from "cdbreact";
+import { useLocation, useHistory } from "react-router-dom";
 
 const Login = () => {
-    const { setUser, isLoading, setIsLoading, loginUser, authError, loginWithGoogle } = useAuth();
+    const { isLoading, loginUser, loginWithGoogle, authError } = useAuth();
     const [loginData, setLoginData] = useState({});
     const location = useLocation();
     const history = useHistory();
-    const redirect_uri = location.state?.from || '/home';
 
     const handleOnBlur = e => {
         const field = e.target.name;
@@ -23,30 +23,24 @@ const Login = () => {
     }
 
     const handleOnSubmit = e => {
+        loginUser(loginData.email, loginData.password, location, history)
         e.preventDefault();
-        loginUser(loginData.email, loginData.password);
     }
 
-    const handleLoginWithGoogle = (e) => {
-        e.preventDefault();
-        loginWithGoogle()
-            .then(result => {
-                setUser(result.user)
-                history.push(redirect_uri)
-            })
-            .finally(() => {
-                setIsLoading(false);
-            })
+    const handleLoginWithGoogle = () => {
+        loginWithGoogle(location, history)
     }
     return (
         <div>
             <Navigation></Navigation>
             <Container>
-                {isLoading && <div className="m-5 mx-auto"><Spinner animation="border" size="lg" variant="success" /></div>}
+                {isLoading && <CDBContainer>
+                    <CDBSpinner danger size="big" />
+                </CDBContainer>}
                 {authError && <Alert variant="danger">
                     {authError}
                 </Alert>}
-                <div className='w-50 mx-auto my-5 shadow p-5'>
+                <Container className='w-75 mx-auto my-5 shadow py-2'>
                     <form onSubmit={handleOnSubmit}>
                         <h3 className='mb-3'>Log in</h3>
                         <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
@@ -71,20 +65,20 @@ const Login = () => {
 
                         <button
                             type="submit"
-                            className="w-100 my-2 btn btn-dark btn-lg btn-block">
+                            className="my-2 btn btn-dark btn-lg btn-block">
                             Sign in
                         </button>
 
                         <button
                             onClick={handleLoginWithGoogle}
-                            className="w-100 btn btn-outline-dark btn-lg btn-block">
+                            className="my-2 btn btn-outline-dark btn-lg btn-block">
                             Google Sign in
                         </button>
                     </form>
-                </div>
-            </Container>
+                </Container >
+            </Container >
             <Footer></Footer>
-        </div>
+        </div >
     );
 };
 

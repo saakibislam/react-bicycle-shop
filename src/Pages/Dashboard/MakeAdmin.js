@@ -44,7 +44,9 @@ const MakeAdmin = () => {
                     </Form.Group>
                     <Button
                         type='submit'
-                        varian="primary">Make Admin</Button>
+                        variant="primary">
+                        Make Admin
+                    </Button>
                 </form>
             </div>
         </div>

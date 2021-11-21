@@ -6,10 +6,10 @@ const Footer = () => {
         <div className='bg-dark tex-white p-5'>
             <Container>
                 <Row>
-                    <Col>
+                    <Col sm={12} md={6} lg={3}>
                         <h3 className='text-white'>Logo Here</h3>
                     </Col>
-                    <Col>
+                    <Col sm={12} md={6} lg={3}>
                         <h5 className='text-white'>Quick Links</h5>
                         <ul className='list-unstyled mt-4'>
                             <li className='bg-dark m-2 text-white'>Explore</li>
@@ -17,7 +17,7 @@ const Footer = () => {
                             <li className='bg-dark m-2 text-white'>Contact</li>
                         </ul>
                     </Col>
-                    <Col>
+                    <Col sm={12} md={6} lg={3}>
                         <h5 className='text-white'>Features</h5>
                         <ul className='list-unstyled mt-4'>
                             <li className='bg-dark m-2 text-white'>Explore</li>
@@ -25,7 +25,7 @@ const Footer = () => {
                             <li className='bg-dark m-2 text-white'>Contact</li>
                         </ul>
                     </Col>
-                    <Col>
+                    <Col sm={12} md={6} lg={3}>
                         <h5 className='text-white'>Subscribe Box</h5>
                         <ul className='list-unstyled mt-4'>
                             <li className='bg-dark m-2 text-white'>Explore</li>

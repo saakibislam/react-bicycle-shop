@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Alert, Container, Form, Spinner } from 'react-bootstrap';
+import { Alert, Container, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import Footer from '../Shared/Footer/Footer';
 import Navigation from '../Shared/Navigation/Navigation';
+import { CDBSpinner, CDBContainer } from "cdbreact";
 
 const Register = () => {
     const [registerData, setRegisterData] = useState({});
@@ -37,7 +38,7 @@ const Register = () => {
                 {authError && <Alert variant="danger">
                     {authError}
                 </Alert>}
-                {!isLoading && <div className='w-50 mx-auto my-2 shadow p-5'>
+                {!isLoading && <Container className='w-75 mx-auto my-2 shadow p-5'>
                     <form onSubmit={handleOnSubmit}>
                         <h3>Sign up</h3>
                         <Form.Group className="mb-3 text-start" controlId="formUserName">
@@ -78,19 +79,13 @@ const Register = () => {
 
                         {passwordMatch && <p className='text-danger text-start'>Password do not match</p>}
 
-                        <Form.Group className="mb-3 text-start" controlId="exampleForm.ControlTextarea1">
-                            <Form.Label>Address</Form.Label>
-                            <Form.Control
-                                as="textarea"
-                                onBlur={handleOnBlur}
-                                rows={3} />
-                        </Form.Group>
-
                         <p>Already registered? <Link to='/login'><span className='text-success fw-bold'>Login</span></Link></p>
                         <button type="submit" className="w-100 my-2 btn btn-dark btn-lg btn-block">Sign up</button>
                     </form>
-                </div>}
-                {isLoading && <div className="m-5 mx-auto"><Spinner animation="border" size="lg" variant="success" /></div>}
+                </Container>}
+                {isLoading && <CDBContainer>
+                    <CDBSpinner danger size="big" />
+                </CDBContainer>}
             </Container>
             <Footer></Footer>
         </div>

@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Footer from '../Shared/Footer/Footer';
 import Navigation from '../Shared/Navigation/Navigation';
 
 const Explore = () => {
     const [bicycles, setBicycles] = useState();
 
     useEffect(() => {
+        let isMounted = true;
         fetch('https://dry-atoll-55407.herokuapp.com/explore')
             .then(res => res.json())
-            .then(data => setBicycles(data))
+            .then(data => {
+                if (isMounted) {
+                    setBicycles(data)
+                }
+            })
+        return () => { isMounted = false };
     }, [])
     return (
         <div>
             <Navigation></Navigation>
-            <h1>Top bikes of the world</h1>
+            <h1 className='my-2'>Top bikes of the world</h1>
             <Container>
                 <Row xs={1} sm={1} md={2} lg={3} className="g-4">
                     {
@@ -38,6 +45,7 @@ const Explore = () => {
                     }
                 </Row>
             </Container>
+            <Footer></Footer>
         </div>
     );
 };

@@ -17,12 +17,19 @@ const BicycleDetails = () => {
     const cycleRef = useRef();
     const dateRef = useRef();
     const priceRef = useRef();
+    const addressRef = useRef();
 
     useEffect(() => {
+        let isMounted = true;
         fetch(`https://dry-atoll-55407.herokuapp.com/explore/${id}`)
             .then(res => res.json())
-            .then(data => setBicycle(data))
-    }, [])
+            .then(data => {
+                if (isMounted) {
+                    setBicycle(data)
+                }
+            })
+        return () => { isMounted = false };
+    }, [id])
 
     const handleOnSubmit = () => {
         const name = nameRef.current.value;
@@ -30,14 +37,17 @@ const BicycleDetails = () => {
         const cycleName = cycleRef.current.value;
         const purchasedDate = dateRef.current.value;
         const priceValue = priceRef.current.value;
+        const deliverAddress = addressRef.current.value;
 
         const order = {
             buyerName: name,
             buyerEmail: email,
             cycleType: cycleName,
             purchasedOn: purchasedDate,
-            price: priceValue
+            price: priceValue,
+            address: deliverAddress
         }
+        console.log(order);
         fetch('https://dry-atoll-55407.herokuapp.com/order', {
             method: 'POST',
             headers: {
@@ -46,7 +56,6 @@ const BicycleDetails = () => {
             body: JSON.stringify(order)
         })
             .then(res => res.json())
-            .then(data => console.log(data))
     }
 
     return (
@@ -125,6 +134,14 @@ const BicycleDetails = () => {
                                     ref={priceRef}
                                     disabled
                                     placeholder="Product Price" />
+                            </Form.Group>
+                            <Form.Group className="mb-3 text-start" controlId="exampleForm.ControlTextarea1">
+                                <Form.Label>Address</Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    ref={addressRef}
+                                    placeholder="Deliver Address"
+                                    rows={3} />
                             </Form.Group>
                         </form>
                     </div>

@@ -1,14 +1,15 @@
 import React from 'react';
-import { Spinner } from 'react-bootstrap';
 import { Redirect, Route } from 'react-router';
 import useAuth from '../hooks/useAuth';
-import useFirebase from '../hooks/useFirebase';
+import { CDBSpinner, CDBContainer } from "cdbreact";
 
 const PrivateRoute = ({ children, ...rest }) => {
     const { user, isLoading } = useAuth();
     if (isLoading) {
         return (
-            <Spinner animation="border" variant="danger" />
+            <CDBContainer>
+                <CDBSpinner danger size="big" />
+            </CDBContainer>
         )
     }
     return (

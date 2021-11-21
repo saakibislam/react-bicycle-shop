@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import useFirebase from '../hooks/useFirebase';
-import { Button } from 'react-bootstrap'
+import { Button, Container } from 'react-bootstrap'
 import useAuth from '../hooks/useAuth';
 
 const DashboardHome = () => {
@@ -8,9 +7,18 @@ const DashboardHome = () => {
     const [orders, setOrders] = useState();
 
     useEffect(() => {
+        let isMounted = true;
         fetch(`https://dry-atoll-55407.herokuapp.com/allorders?email=${user.email}`)
             .then(res => res.json())
-            .then(data => setOrders(data))
+            .then(data => {
+                if (isMounted) {
+                    setOrders(data)
+                }
+            })
+
+        return () => {
+            isMounted = false;
+        }
     }, [user, orders])
 
     // Cancel Order
@@ -27,7 +35,7 @@ const DashboardHome = () => {
     return (
         <div>
             {/* Table  */}
-            <div>
+            <Container>
                 <div className="card m-4">
                     <div className="card-header">
                         <i className="fas fa-table mr-1"></i>
@@ -67,7 +75,7 @@ const DashboardHome = () => {
                         </div>
                     </div>
                 </div>
-            </div >
+            </Container>
         </div>
     );
 };

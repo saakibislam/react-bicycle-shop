@@ -9,23 +9,25 @@ const useFirebase = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [authError, setAuthError] = useState('');
     const [admin, setAdmin] = useState(false);
+
     const auth = getAuth();
     const googleProvider = new GoogleAuthProvider();
 
+    // register user
     const registerUser = (email, password, name) => {
         setIsLoading(true);
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 setAuthError('');
-                const newUser = { email, displayName: name }
-                setUser(newUser);
+                setUser(userCredential.user)
                 // save user to database
-                saveUser(email, name);
+                saveUser(email, name, 'POST');
                 // send name to firebase after register
                 updateProfile(auth.currentUser, {
                     displayName: name
                 }).then(() => {
                 }).catch((error) => {
+                    console.log(error.message)
                 })
             })
             .catch((error) => {
@@ -36,11 +38,15 @@ const useFirebase = () => {
             })
     }
 
-    const loginUser = (email, password) => {
+    // normal login
+    const loginUser = (email, password, location, history) => {
         setIsLoading(true);
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
+                setUser(userCredential.user)
                 setAuthError('')
+                const destination = location?.state?.from || '/'
+                history.push(destination)
             })
             .catch((error) => {
                 setAuthError(error.message);
@@ -48,11 +54,27 @@ const useFirebase = () => {
             .finally(() => {
                 setIsLoading(false);
             })
+
     }
 
-    const loginWithGoogle = () => {
+    // login using google
+    const loginWithGoogle = (location, history) => {
         setIsLoading(true);
-        return signInWithPopup(auth, googleProvider)
+        signInWithPopup(auth, googleProvider)
+            .then(result => {
+                setUser(result.user)
+                setAuthError('')
+                const destination = location?.state?.from || '/'
+                history.push(destination)
+                // save user to database
+                saveUser(result.user.email, result.user.displayName, 'PUT')
+            })
+            .catch((error) => {
+                setAuthError(error.message);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            })
     }
 
     //observer user state change
@@ -67,14 +89,23 @@ const useFirebase = () => {
             setIsLoading(false);
         });
         return () => unsubscribe;
-    }, [])
+    }, [auth])
 
+    // checking if user is admin
     useEffect(() => {
         fetch(`https://dry-atoll-55407.herokuapp.com/users/${user.email}`)
             .then(res => res.json())
-            .then(data => setAdmin(true))
+            .then(data => {
+                if (data.admin) {
+                    setAdmin(true);
+                }
+                else {
+                    setAdmin(false);
+                }
+            })
     }, [user.email])
 
+    //logout user
     const logOut = () => {
         setIsLoading(true);
         signOut(auth)
@@ -85,10 +116,11 @@ const useFirebase = () => {
             })
     }
 
-    const saveUser = (email, displayName) => {
+    // saving register/google login user to database
+    const saveUser = (email, displayName, method) => {
         const user = { email, displayName };
         fetch('https://dry-atoll-55407.herokuapp.com/users', {
-            method: 'POST',
+            method: method,
             headers: {
                 'content-type': 'application/json'
             },
@@ -97,11 +129,13 @@ const useFirebase = () => {
             .then()
     }
 
+
     return {
         user,
         setUser,
         admin,
         authError,
+        setAuthError,
         isLoading,
         setIsLoading,
         registerUser,

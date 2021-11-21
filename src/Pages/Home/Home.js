@@ -4,14 +4,22 @@ import { Link } from 'react-router-dom';
 import Footer from '../Shared/Footer/Footer';
 import Navigation from '../Shared/Navigation/Navigation';
 import Banner from './Banner';
+import Feedback from './Feedback';
+import News from './News';
 
 const Home = () => {
     const [bicycles, setBicycles] = useState();
 
     useEffect(() => {
+        let isMounted = true;
         fetch('https://dry-atoll-55407.herokuapp.com/explore')
             .then(res => res.json())
-            .then(data => setBicycles(data.slice(0, 4)))
+            .then(data => {
+                if (isMounted) {
+                    setBicycles(data.slice(0, 4))
+                }
+            })
+        return () => { isMounted = false };
     }, [])
     return (
         <div>
@@ -41,6 +49,8 @@ const Home = () => {
                     }
                 </Row>
             </Container>
+            <Feedback></Feedback>
+            <News></News>
             <Footer></Footer>
         </div>
     );
