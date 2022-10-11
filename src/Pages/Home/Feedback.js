@@ -5,7 +5,7 @@ const Feedback = () => {
     const [reviews, setReviews] = useState()
     useEffect(() => {
         let isMounted = true;
-        fetch('https://dry-atoll-55407.herokuapp.com/reviews')
+        fetch('/reviews')
             .then(res => res.json())
             .then(data => {
                 if (isMounted) {
@@ -18,6 +18,7 @@ const Feedback = () => {
         <Container>
             <h1>Feedback</h1>
             <Carousel variant="dark" fade>
+
                 {
                     reviews?.map(review => <Carousel.Item key={review._id}>
                         <div style={{ height: '350px', paddingTop: '30px', margin: '10px' }}>
@@ -27,6 +28,7 @@ const Feedback = () => {
                         </div>
                     </Carousel.Item>)
                 }
+
             </Carousel>
         </Container>
 

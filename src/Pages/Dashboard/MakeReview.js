@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Form, Button, Alert, Container } from 'react-bootstrap';
+import { Form, Button, Alert, Container, Row, Col } from 'react-bootstrap';
 import useAuth from '../hooks/useAuth';
 
-const MakeReview = () => {
+const MakeReview = ({ orders }) => {
     const { user } = useAuth();
     const [reviewData, setReviewData] = useState();
     const [success, setSuccess] = useState(false);
@@ -19,7 +19,7 @@ const MakeReview = () => {
 
     const handleReviewSubmit = e => {
         e.preventDefault();
-        fetch('https://dry-atoll-55407.herokuapp.com/reviews', {
+        fetch('/reviews', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -38,26 +38,36 @@ const MakeReview = () => {
         <div>
             <h3>Review Products</h3>
             <Container>
-                <form onSubmit={handleReviewSubmit}>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Comments</Form.Label>
-                        <Form.Control
-                            required
-                            as="textarea" rows={3}
-                            onBlur={handleOnBlur}
-                        />
-                    </Form.Group>
-                    <Button
-                        className="px-5 py-2"
-                        type='submit'
-                        variant="primary"
-                    >Post</Button>
-                </form>
+                <Row>
+                    <Col className='col-md-8 mx-auto'>
+                        <form onSubmit={handleReviewSubmit}>
+                            <Form.Select aria-label="Default select example" className='my-3'>
+                                {
+                                    orders.map(order => <option key={order._id} value={order?.cycleType}>{order?.cycleType}</option>)
+                                }
+                            </Form.Select>
+                            <Form.Group className="mb-3 text-start" controlId="exampleForm.ControlInput1">
+                                <Form.Control
+                                    required
+                                    as="textarea"
+                                    placeholder='Comments'
+                                    rows={3}
+                                    onBlur={handleOnBlur}
+                                />
+                            </Form.Group>
+                            <Button
+                                className="px-5 py-2"
+                                type='submit'
+                                variant="primary"
+                            >Post</Button>
+                        </form>
+                    </Col>
+                </Row>
                 {success && <Alert className='mt-3' variant="success">
                     Thank You. We appreciate your review.
                 </Alert>}
             </Container>
-        </div>
+        </div >
     );
 };
 

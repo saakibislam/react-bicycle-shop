@@ -1,16 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Col, Container, Form, Row } from 'react-bootstrap';
+import { Col, Container, Form, Row, Buy } from 'react-bootstrap';
 import { useParams } from 'react-router';
 import Navigation from '../Shared/Navigation/Navigation';
 import { Button } from 'react-bootstrap';
 import useFirebase from '../hooks/useFirebase';
 import { Link } from 'react-router-dom';
 import Footer from '../Shared/Footer/Footer';
+import PurchaseModal from './PurchaseModal';
 
 const BicycleDetails = () => {
     const { id } = useParams();
     const [bicycle, setBicycle] = useState({});
     const { user } = useFirebase();
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const nameRef = useRef();
     const emailRef = useRef();
@@ -21,7 +26,7 @@ const BicycleDetails = () => {
 
     useEffect(() => {
         let isMounted = true;
-        fetch(`https://dry-atoll-55407.herokuapp.com/explore/${id}`)
+        fetch(`/explore/${id}`)
             .then(res => res.json())
             .then(data => {
                 if (isMounted) {
@@ -31,7 +36,7 @@ const BicycleDetails = () => {
         return () => { isMounted = false };
     }, [id])
 
-    const handleOnSubmit = () => {
+    /* const handleOnSubmit = () => {
         const name = nameRef.current.value;
         const email = emailRef.current.value;
         const cycleName = cycleRef.current.value;
@@ -48,7 +53,7 @@ const BicycleDetails = () => {
             address: deliverAddress
         }
         console.log(order);
-        fetch('https://dry-atoll-55407.herokuapp.com/order', {
+        fetch('/order', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -56,7 +61,7 @@ const BicycleDetails = () => {
             body: JSON.stringify(order)
         })
             .then(res => res.json())
-    }
+    } */
 
     return (
         <div>
@@ -68,91 +73,19 @@ const BicycleDetails = () => {
                         <img className='img-fluid' src={bicycle.img} alt="" />
                     </Col>
                     <Col>
-                        <div style={{ backgroundColor: 'lightgray', height: '500px', padding: '20px' }}>
+                        <div style={{ boxShadow: '0px 0px 15px lightgray', height: '500px', padding: '20px' }}>
                             <div>
                                 <h2>{bicycle.name}</h2>
                                 <p>{bicycle.description}</p>
                             </div>
-                            <div className='mt-5'>
-                                <h4>Price: ${bicycle.price}</h4>
+                            <div className='my-3'>
+                                <h4 className="text-success">Price: ${bicycle.price}</h4>
                             </div>
+                            <Button variant='success' onClick={handleShow}>Buy Now</Button>
                         </div>
                     </Col>
                 </Row>
-                <div>
-                    <div className='w-50 mx-auto my-5 p-5' style={{ boxShadow: '0 0 10px gray', borderRadius: '5px' }}>
-                        <h4 className='text-primary'>Purchase Form</h4>
-                        <form>
-                            <Form.Group
-                                className="mb-3 text-start"
-                                controlId="exampleForm.ControlInput1">
-                                <Form.Label>Name</Form.Label>
-                                <Form.Control
-                                    type="email"
-                                    defaultValue={user.displayName}
-                                    ref={nameRef}
-                                    placeholder="Your Name" />
-                            </Form.Group>
-                            <Form.Group
-                                className="mb-3 text-start"
-                                controlId="exampleForm.ControlInput1">
-                                <Form.Label>Email address</Form.Label>
-                                <Form.Control
-                                    type="email"
-                                    defaultValue={user.email}
-                                    ref={emailRef}
-                                    placeholder="name@example.com" />
-                            </Form.Group>
-                            <Form.Group
-                                className="mb-3 text-start"
-                                controlId="exampleForm.ControlInput1">
-                                <Form.Label>Cycle Type</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    defaultValue={bicycle.name}
-                                    ref={cycleRef}
-                                    placeholder="Cycle Name" />
-                            </Form.Group>
-                            <Form.Group
-                                className="mb-3 text-start"
-                                controlId="exampleForm.ControlInput1">
-                                <Form.Label>Purchase Date</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    defaultValue={new Date().toLocaleDateString()}
-                                    ref={dateRef}
-                                    disabled
-                                    placeholder="Purchased Date" />
-                            </Form.Group>
-                            <Form.Group
-                                className="mb-3 text-start"
-                                controlId="exampleForm.ControlInput1">
-                                <Form.Label>Price</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    defaultValue={bicycle.price}
-                                    ref={priceRef}
-                                    disabled
-                                    placeholder="Product Price" />
-                            </Form.Group>
-                            <Form.Group className="mb-3 text-start" controlId="exampleForm.ControlTextarea1">
-                                <Form.Label>Address</Form.Label>
-                                <Form.Control
-                                    as="textarea"
-                                    ref={addressRef}
-                                    placeholder="Deliver Address"
-                                    rows={3} />
-                            </Form.Group>
-                        </form>
-                    </div>
-                    <Link to='/success'>
-                        <Button
-                            onClick={handleOnSubmit}
-                            size="lg" variant="success">
-                            Purchase
-                        </Button>
-                    </Link>
-                </div>
+                <PurchaseModal show={show} handleClose={handleClose} bicycle={bicycle}></PurchaseModal>
             </Container>
             <Footer></Footer>
         </div>

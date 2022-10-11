@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     CDBBadge,
     CDBSidebar,
@@ -25,6 +25,23 @@ import Pay from './Pay';
 const Dashboard = () => {
     let { path, url } = useRouteMatch();
     const { user, admin, logOut } = useAuth();
+    const [orders, setOrders] = useState();
+
+
+    useEffect(() => {
+        let isMounted = true;
+        fetch(`/allorders?email=${user.email}`)
+            .then(res => res.json())
+            .then(data => {
+                if (isMounted) {
+                    setOrders(data)
+                }
+            })
+
+        return () => {
+            isMounted = false;
+        }
+    }, [user, orders])
     return (
 
         <div style={{ display: "flex", height: "100vh", overflow: "scroll initial" }}>
@@ -142,7 +159,7 @@ const Dashboard = () => {
                         {/* Dashboard Home Goes here  */}
                         <Switch>
                             <Route exact path={path}>
-                                <DashboardHome></DashboardHome>
+                                <DashboardHome orders={orders}></DashboardHome>
                             </Route>
                             <Route path={`${path}/pay`}>
                                 <Pay></Pay>
@@ -154,7 +171,7 @@ const Dashboard = () => {
                                 <AddProduct></AddProduct>
                             </Route>
                             <Route path={`${path}/makeReview`}>
-                                <MakeReview></MakeReview>
+                                <MakeReview orders={orders}></MakeReview>
                             </Route>
                         </Switch>
                     </div>

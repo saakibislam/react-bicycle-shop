@@ -12,7 +12,7 @@ const MakeAdmin = () => {
     const handleAdminSubmit = e => {
         e.preventDefault();
         const user = { email }
-        fetch('https://dry-atoll-55407.herokuapp.com/users/admin', {
+        fetch('/users/admin', {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

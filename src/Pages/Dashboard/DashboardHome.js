@@ -1,31 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Container } from 'react-bootstrap'
-import useAuth from '../hooks/useAuth';
 
-const DashboardHome = () => {
-    const { user } = useAuth();
-    const [orders, setOrders] = useState();
-
-    useEffect(() => {
-        let isMounted = true;
-        fetch(`https://dry-atoll-55407.herokuapp.com/allorders?email=${user.email}`)
-            .then(res => res.json())
-            .then(data => {
-                if (isMounted) {
-                    setOrders(data)
-                }
-            })
-
-        return () => {
-            isMounted = false;
-        }
-    }, [user, orders])
+const DashboardHome = ({ orders }) => {
 
     // Cancel Order
     const handleOrderCancel = (orderId) => {
         const confirmationForDelete = window.confirm("Are you sure you want to cancel this order?");
         if (confirmationForDelete) {
-            fetch(`https://dry-atoll-55407.herokuapp.com/cancel?orderId=${orderId}`, {
+            fetch(`/cancel?orderId=${orderId}`, {
                 method: 'DELETE'
             })
         }

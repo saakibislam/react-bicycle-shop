@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Container, Form } from 'react-bootstrap';
+import { Alert, Container, Form, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import Footer from '../Shared/Footer/Footer';
@@ -34,22 +34,24 @@ const Login = () => {
         <div>
             <Navigation></Navigation>
             <Container>
-                {isLoading && <CDBContainer>
-                    <CDBSpinner danger size="big" />
+                {isLoading && <CDBContainer className="my-2">
+                    <CDBSpinner danger />
                 </CDBContainer>}
-                {authError && <Alert variant="danger">
+                {authError && <Alert className='col-md-6 mx-auto' variant="danger">
                     {authError}
                 </Alert>}
-                <Container className='w-75 mx-auto my-5 shadow py-2'>
+                <Row className="col-md-6 mx-auto shadow py-2 my-5">
                     <form onSubmit={handleOnSubmit}>
-                        <h3 className='mb-3'>Log in</h3>
+                        <h3 className='my-3'>Log in</h3>
                         <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control
                                 type="email"
                                 name="email"
                                 onBlur={handleOnBlur}
-                                placeholder="Enter email" />
+                                placeholder="Enter email"
+                                required
+                            />
                         </Form.Group>
 
                         <Form.Group className="mb-3 text-start" controlId="formBasicPassword">
@@ -58,7 +60,9 @@ const Login = () => {
                                 type="password"
                                 name="password"
                                 onBlur={handleOnBlur}
-                                placeholder="Password" />
+                                placeholder="Password"
+                                required
+                            />
                         </Form.Group>
 
                         <p>New User? <Link to='/register'><span className='text-success fw-bold'>Create an account</span></Link></p>
@@ -75,7 +79,7 @@ const Login = () => {
                             Google Sign in
                         </button>
                     </form>
-                </Container >
+                </Row >
             </Container >
             <Footer></Footer>
         </div >

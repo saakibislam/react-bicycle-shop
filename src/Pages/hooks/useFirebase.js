@@ -93,7 +93,7 @@ const useFirebase = () => {
 
     // checking if user is admin
     useEffect(() => {
-        fetch(`https://dry-atoll-55407.herokuapp.com/users/${user.email}`)
+        fetch(`/users/${user.email}`)
             .then(res => res.json())
             .then(data => {
                 if (data.admin) {
@@ -119,7 +119,7 @@ const useFirebase = () => {
     // saving register/google login user to database
     const saveUser = (email, displayName, method) => {
         const user = { email, displayName };
-        fetch('https://dry-atoll-55407.herokuapp.com/users', {
+        fetch('/users', {
             method: method,
             headers: {
                 'content-type': 'application/json'

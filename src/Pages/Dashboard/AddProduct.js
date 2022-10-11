@@ -16,7 +16,7 @@ const AddProduct = () => {
 
     const handleProductSubmit = e => {
         e.preventDefault();
-        fetch('https://dry-atoll-55407.herokuapp.com/addProduct', {
+        fetch('/addProduct', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

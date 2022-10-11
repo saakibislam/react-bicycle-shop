@@ -25,13 +25,13 @@ const Navigation = () => {
                                 <Link to='/home'>
                                     <Button
                                         onClick={logOut}
-                                        variant='outline-danger' size="lg">
+                                        variant='outline-danger' size="md">
                                         Logout
                                     </Button>
                                 </Link>
                                 :
                                 <Link to='/login'>
-                                    <Button variant='outline-warning' size="lg">
+                                    <Button variant='outline-warning' size="md">
                                         Login
                                     </Button>
                                 </Link>
