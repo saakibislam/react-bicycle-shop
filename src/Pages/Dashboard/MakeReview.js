@@ -19,7 +19,7 @@ const MakeReview = ({ orders }) => {
 
     const handleReviewSubmit = e => {
         e.preventDefault();
-        fetch('/reviews', {
+        fetch('https://dry-atoll-55407.herokuapp.com/reviews', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

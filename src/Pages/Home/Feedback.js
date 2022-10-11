@@ -5,7 +5,7 @@ const Feedback = () => {
     const [reviews, setReviews] = useState()
     useEffect(() => {
         let isMounted = true;
-        fetch('/reviews')
+        fetch('https://dry-atoll-55407.herokuapp.com/reviews')
             .then(res => res.json())
             .then(data => {
                 if (isMounted) {

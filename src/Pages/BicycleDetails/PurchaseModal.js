@@ -28,7 +28,7 @@ const PurchaseModal = ({ bicycle, show, handleClose }) => {
             address: deliverAddress
         }
         console.log(order);
-        fetch('/order', {
+        fetch('https://dry-atoll-55407.herokuapp.com/order', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

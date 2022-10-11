@@ -119,7 +119,7 @@ const useFirebase = () => {
     // saving register/google login user to database
     const saveUser = (email, displayName, method) => {
         const user = { email, displayName };
-        fetch('/users', {
+        fetch('https://dry-atoll-55407.herokuapp.com/users', {
             method: method,
             headers: {
                 'content-type': 'application/json'

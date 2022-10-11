@@ -12,7 +12,7 @@ const Home = () => {
 
     useEffect(() => {
         let isMounted = true;
-        fetch('/explore')
+        fetch('https://dry-atoll-55407.herokuapp.com/explore')
             .then(res => res.json())
             .then(data => {
                 if (isMounted) {
