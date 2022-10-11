@@ -3,6 +3,7 @@ import { Carousel, Container } from 'react-bootstrap';
 
 const Feedback = () => {
     const [reviews, setReviews] = useState()
+
     useEffect(() => {
         let isMounted = true;
         fetch('https://dry-atoll-55407.herokuapp.com/reviews')

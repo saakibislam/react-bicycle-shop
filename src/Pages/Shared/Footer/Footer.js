@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 
 const Footer = () => {
     return (
@@ -26,12 +26,15 @@ const Footer = () => {
                         </ul>
                     </Col>
                     <Col sm={12} md={6} lg={3}>
-                        <h5 className='text-white'>Subscribe Box</h5>
-                        <ul className='list-unstyled mt-4'>
-                            <li className='bg-dark m-2 text-white'>Explore</li>
-                            <li className='bg-dark m-2 text-white'>About</li>
-                            <li className='bg-dark m-2 text-white'>Contact</li>
-                        </ul>
+                        <Form.Group controlId="formBasicEmail">
+                            <Form.Control
+                                type="email"
+                                name="email"
+                                placeholder="Subscribe Now for latest updates"
+                                required
+                            />
+                            <Button className="mt-3 btn btn-primary">Submit</Button>
+                        </Form.Group>
                     </Col>
                 </Row>
             </Container>
