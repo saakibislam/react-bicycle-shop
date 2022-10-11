@@ -14,12 +14,13 @@ const useFirebase = () => {
     const googleProvider = new GoogleAuthProvider();
 
     // register user
-    const registerUser = (email, password, name) => {
+    const registerUser = (email, password, name, history) => {
         setIsLoading(true);
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 setAuthError('');
                 setUser(userCredential.user)
+                history.push('/')
                 // save user to database
                 saveUser(email, name, 'POST');
                 // send name to firebase after register
@@ -38,7 +39,7 @@ const useFirebase = () => {
             })
     }
 
-    // normal login
+    // email, password login
     const loginUser = (email, password, location, history) => {
         setIsLoading(true);
         signInWithEmailAndPassword(auth, email, password)
@@ -47,6 +48,16 @@ const useFirebase = () => {
                 setAuthError('')
                 const destination = location?.state?.from || '/'
                 history.push(destination)
+                fetch('https://dry-atoll-55407.herokuapp.com/token', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({ email })
+                })
+                    .then(res => res.json())
+                    .then(data => { localStorage.setItem('accessToken', data.token) })
+                    .catch(error => console.dir(error))
             })
             .catch((error) => {
                 setAuthError(error.message);
@@ -71,6 +82,9 @@ const useFirebase = () => {
             })
             .catch((error) => {
                 setAuthError(error.message);
+                setTimeout(() => {
+                    setAuthError('')
+                }, 3000);
             })
             .finally(() => {
                 setIsLoading(false);
@@ -109,7 +123,10 @@ const useFirebase = () => {
     const logOut = () => {
         setIsLoading(true);
         signOut(auth)
-            .then(setAuthError(''))
+            .then(() => {
+                setAuthError('')
+                localStorage.removeItem('accessToken')
+            })
             .catch(error => setAuthError(error.message))
             .finally(() => {
                 setIsLoading(false);

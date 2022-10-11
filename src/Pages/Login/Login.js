@@ -69,13 +69,13 @@ const Login = () => {
 
                         <button
                             type="submit"
-                            className="my-2 btn btn-dark btn-lg btn-block">
+                            className="w-50 mx-auto my-2 btn btn-dark btn-lg btn-block">
                             Sign in
                         </button>
 
                         <button
                             onClick={handleLoginWithGoogle}
-                            className="my-2 btn btn-outline-dark btn-lg btn-block">
+                            className="w-50 mx-auto my-2 btn btn-outline-dark btn-lg btn-block">
                             Google Sign in
                         </button>
                     </form>

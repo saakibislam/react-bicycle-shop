@@ -26,7 +26,7 @@ const Footer = () => {
                         </ul>
                     </Col>
                     <Col sm={12} md={6} lg={3}>
-                        <Form.Group controlId="formBasicEmail">
+                        <Form.Group controlId="formSubscribeEmail">
                             <Form.Control
                                 type="email"
                                 name="email"
