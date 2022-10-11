@@ -1,28 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Col, Container, Form, Row, Buy } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 import { useParams } from 'react-router';
 import Navigation from '../Shared/Navigation/Navigation';
 import { Button } from 'react-bootstrap';
-import useFirebase from '../hooks/useFirebase';
-import { Link } from 'react-router-dom';
 import Footer from '../Shared/Footer/Footer';
 import PurchaseModal from './PurchaseModal';
 
 const BicycleDetails = () => {
     const { id } = useParams();
     const [bicycle, setBicycle] = useState({});
-    const { user } = useFirebase();
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    const nameRef = useRef();
-    const emailRef = useRef();
-    const cycleRef = useRef();
-    const dateRef = useRef();
-    const priceRef = useRef();
-    const addressRef = useRef();
 
     useEffect(() => {
         let isMounted = true;
@@ -36,32 +26,6 @@ const BicycleDetails = () => {
         return () => { isMounted = false };
     }, [id])
 
-    /* const handleOnSubmit = () => {
-        const name = nameRef.current.value;
-        const email = emailRef.current.value;
-        const cycleName = cycleRef.current.value;
-        const purchasedDate = dateRef.current.value;
-        const priceValue = priceRef.current.value;
-        const deliverAddress = addressRef.current.value;
-
-        const order = {
-            buyerName: name,
-            buyerEmail: email,
-            cycleType: cycleName,
-            purchasedOn: purchasedDate,
-            price: priceValue,
-            address: deliverAddress
-        }
-        console.log(order);
-        fetch('/order', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(order)
-        })
-            .then(res => res.json())
-    } */
 
     return (
         <div>

@@ -1,6 +1,5 @@
 import React, { useRef } from 'react'
-import { Modal, Button, Form } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Modal, Button, Form } from 'react-bootstrap';
 import useFirebase from '../hooks/useFirebase';
 
 const PurchaseModal = ({ bicycle, show, handleClose }) => {
