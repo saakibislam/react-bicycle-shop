@@ -1,18 +1,18 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import About from './Pages/About/About';
-import Contact from './Pages/Contact/Contact';
-import Dashboard from './Pages/Dashboard/Dashboard';
-import Home from './Pages/Home/Home';
-import NotFound from './Pages/NotFound/NotFound';
-import Login from './Pages/Login/Login';
-import Explore from './Pages/Explore/Explore';
-import Register from './Pages/Register/Register';
-import BicycleDetails from './Pages/BicycleDetails/BicycleDetails';
-import PrivateRoute from './Pages/PrivateRoute/PrivateRoute';
-import Success from './Pages/Success/Success';
-import AuthProvider from './Pages/AuthProvider/AuthProvider';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import About from "./Pages/About/About";
+import Contact from "./Pages/Contact/Contact";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import Home from "./Pages/Home/Home";
+import NotFound from "./Pages/NotFound/NotFound";
+import Login from "./Pages/Login/Login";
+import Explore from "./Pages/Explore/Explore";
+import Register from "./Pages/Register/Register";
+import BicycleDetails from "./Pages/BicycleDetails/BicycleDetails";
+import PrivateRoute from "./Pages/PrivateRoute/PrivateRoute";
+import Success from "./Pages/Success/Success";
+import AuthProvider from "./Pages/AuthProvider/AuthProvider";
 
 function App() {
   return (
@@ -20,37 +20,37 @@ function App() {
       <AuthProvider>
         <Router>
           <Switch>
-            <Route exact path='/'>
+            <Route exact path="/">
               <Home></Home>
             </Route>
-            <Route path='/home'>
+            <Route path="/home">
               <Home></Home>
             </Route>
-            <Route exact path='/explore'>
+            <Route exact path="/explore">
               <Explore></Explore>
             </Route>
-            <PrivateRoute path='/explore/:id'>
+            <PrivateRoute path="/explore/:id">
               <BicycleDetails></BicycleDetails>
             </PrivateRoute>
-            <PrivateRoute path='/dashboard'>
+            <PrivateRoute path="/dashboard">
               <Dashboard></Dashboard>
             </PrivateRoute>
-            <PrivateRoute path='/success'>
+            <PrivateRoute path="/success">
               <Success></Success>
             </PrivateRoute>
-            <Route path='/login'>
+            <Route path="/login">
               <Login></Login>
             </Route>
-            <Route path='/register'>
+            <Route path="/register">
               <Register></Register>
             </Route>
-            <Route path='/about'>
+            <Route path="/about">
               <About></About>
             </Route>
-            <Route path='/contact'>
+            <Route path="/contact">
               <Contact></Contact>
             </Route>
-            <Route path='*'>
+            <Route path="*">
               <NotFound></NotFound>
             </Route>
           </Switch>
