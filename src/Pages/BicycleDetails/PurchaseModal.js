@@ -28,7 +28,7 @@ const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
       address: deliverAddress,
     };
     // console.log(order);
-    fetch("/order", {
+    fetch("https://bike-mania.onrender.com/order", {
       method: "POST",
       headers: {
         "content-type": "application/json",

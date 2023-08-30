@@ -24,7 +24,7 @@ const BicycleDetails = () => {
 
   useEffect(() => {
     let isMounted = true;
-    fetch(`/explore/${id}`)
+    fetch(`https://bike-mania.onrender.com/explore/${id}`)
       .then((res) => res.json())
       .then((data) => {
         if (isMounted) {

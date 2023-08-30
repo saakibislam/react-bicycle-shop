@@ -12,7 +12,7 @@ const MakeAdmin = () => {
   const handleAdminSubmit = (e) => {
     e.preventDefault();
     const user = { email };
-    fetch("users/admin", {
+    fetch("https://bike-mania.onrender.com/users/admin", {
       method: "PUT",
       headers: {
         "content-type": "application/json",

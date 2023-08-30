@@ -8,7 +8,9 @@ const BestSell = () => {
   const [bicycles, setBicycles] = useState();
 
   useEffect(() => {
-    axios.get("explore").then((res) => setBicycles(res.data.slice(0, 4)));
+    axios
+      .get("https://bike-mania.onrender.com/explore")
+      .then((res) => setBicycles(res.data.slice(0, 4)));
 
     return () => setBicycles([]);
   }, []);

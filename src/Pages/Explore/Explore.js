@@ -10,7 +10,9 @@ const Explore = () => {
   const [bicycles, setBicycles] = useState();
 
   useEffect(() => {
-    axios.get("explore").then((res) => setBicycles(res.data));
+    axios
+      .get("https://bike-mania.onrender.com/explore")
+      .then((res) => setBicycles(res.data));
   }, []);
 
   if (!bicycles) return <Loading></Loading>;

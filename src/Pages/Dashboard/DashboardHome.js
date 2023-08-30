@@ -8,7 +8,7 @@ const DashboardHome = ({ orders }) => {
       "Are you sure you want to cancel this order?"
     );
     if (confirmationForDelete) {
-      fetch(`/cancel?orderId=${orderId}`, {
+      fetch(`https://bike-mania.onrender.com/cancel?orderId=${orderId}`, {
         method: "DELETE",
       });
     }

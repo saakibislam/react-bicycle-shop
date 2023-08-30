@@ -6,7 +6,9 @@ import Loading from "../Shared/Loading/Loading";
 const Feedback = () => {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
-    axios.get("reviews").then((res) => setReviews(res.data));
+    axios
+      .get("https://bike-mania.onrender.com/reviews")
+      .then((res) => setReviews(res.data));
     return () => setReviews([]);
   }, []);
 

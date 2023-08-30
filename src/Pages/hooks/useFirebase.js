@@ -110,7 +110,7 @@ const useFirebase = () => {
 
   // checking if user is admin
   useEffect(() => {
-    fetch(`http://localhost:5000/users/${user.email}`)
+    fetch(`https://bike-mania.onrender.com/users/${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.admin) {
@@ -124,7 +124,7 @@ const useFirebase = () => {
   // saving register/google login user to database
   const saveUser = (email, displayName, method, provider) => {
     const user = { email, displayName, provider };
-    fetch("users", {
+    fetch("https://bike-mania.onrender.com/users", {
       method: method,
       headers: {
         "content-type": "application/json",
@@ -135,7 +135,7 @@ const useFirebase = () => {
 
   // Generating JWT Token
   const getToken = (email) => {
-    fetch("http://localhost:5000/token", {
+    fetch("https://bike-mania.onrender.com/token", {
       method: "POST",
       headers: {
         "content-type": "application/json",

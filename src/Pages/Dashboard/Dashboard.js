@@ -24,7 +24,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     let isMounted = true;
-    fetch(`http://localhost:5000/allorders?email=${user.email}`, {
+    fetch(`https://bike-mania.onrender.com/allorders?email=${user.email}`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },

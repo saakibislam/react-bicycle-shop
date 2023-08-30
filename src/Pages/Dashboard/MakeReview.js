@@ -19,7 +19,7 @@ const MakeReview = ({ orders }) => {
 
   const handleReviewSubmit = (e) => {
     e.preventDefault();
-    fetch("reviews", {
+    fetch("https://bike-mania.onrender.com/reviews", {
       method: "POST",
       headers: {
         "content-type": "application/json",

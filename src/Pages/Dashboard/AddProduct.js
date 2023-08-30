@@ -16,7 +16,7 @@ const AddProduct = () => {
 
   const handleProductSubmit = (e) => {
     e.preventDefault();
-    fetch("addProduct", {
+    fetch("https://bike-mania.onrender.com/addProduct", {
       method: "POST",
       headers: {
         "content-type": "application/json",
