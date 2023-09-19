@@ -9,7 +9,7 @@ const Navigation = () => {
     <div>
       <Navbar bg="dark" variant="dark" collapseOnSelect expand="lg">
         <Container>
-          <Navbar.Brand href="/home">Logo Here</Navbar.Brand>
+          <Navbar.Brand href="/home">Bike Mania</Navbar.Brand>
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Nav className="me-auto">

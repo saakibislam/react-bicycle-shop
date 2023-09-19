@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Alert, Container, Form, Row } from "react-bootstrap";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
 import Footer from "../Shared/Footer/Footer";
 import Navigation from "../Shared/Navigation/Navigation";
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
   const { loginUser, loginWithGoogle, authError } = useAuth();
@@ -72,14 +72,14 @@ const Login = () => {
               {/* Normal Sign In  */}
               <button
                 type="submit"
-                className="btn btn-dark btn-lg btn-block w-75 mx-auto my-2"
+                className="btn btn-dark btn-lg btn-block w-50 mx-auto my-2"
               >
                 Sign in
               </button>
               {/* Google Sign In Button  */}
               <button
                 onClick={handleLoginWithGoogle}
-                className="btn btn-outline-dark btn-lg btn-block w-75 mx-auto my-2"
+                className="btn btn-outline-dark btn-lg btn-block w-50 mx-auto my-2"
               >
                 Google Sign in
               </button>
