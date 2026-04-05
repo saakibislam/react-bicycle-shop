@@ -1,5 +1,4 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Footer from "../Shared/Footer/Footer";
@@ -10,9 +9,9 @@ const Explore = () => {
   const [bicycles, setBicycles] = useState();
 
   useEffect(() => {
-    axios
-      .get("https://bike-mania.onrender.com/explore")
-      .then((res) => setBicycles(res.data));
+    fetch("http://localhost:5000/api/v2/explore")
+      .then((res) => res.json())
+      .then((data) => setBicycles(data));
   }, []);
 
   if (!bicycles) return <Loading></Loading>;

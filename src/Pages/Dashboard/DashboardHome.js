@@ -1,14 +1,13 @@
-import React from "react";
 import { Button, Container } from "react-bootstrap";
 
 const DashboardHome = ({ orders }) => {
   // Cancel Order
   const handleOrderCancel = (orderId) => {
     const confirmationForDelete = window.confirm(
-      "Are you sure you want to cancel this order?"
+      "Are you sure you want to cancel this order?",
     );
     if (confirmationForDelete) {
-      fetch(`https://bike-mania.onrender.com/cancel?orderId=${orderId}`, {
+      fetch(`http://localhost:5000/api/v2/cancel?orderId=${orderId}`, {
         method: "DELETE",
       });
     }

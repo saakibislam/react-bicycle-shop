@@ -1,14 +1,13 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Carousel, Container } from "react-bootstrap";
 import Loading from "../Shared/Loading/Loading";
 
 const Feedback = () => {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
-    axios
-      .get("https://bike-mania.onrender.com/reviews")
-      .then((res) => setReviews(res.data));
+    fetch("http://localhost:5000/api/v2/reviews")
+      .then((res) => res.json())
+      .then((data) => setReviews(data));
     return () => setReviews([]);
   }, []);
 

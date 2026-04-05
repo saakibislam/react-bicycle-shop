@@ -7,7 +7,7 @@ import {
   CDBSidebarMenu,
   CDBSidebarMenuItem,
 } from "cdbreact";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Badge, Button } from "react-bootstrap";
 import { NavLink, Route, Switch, useRouteMatch } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
@@ -24,7 +24,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     let isMounted = true;
-    fetch(`https://bike-mania.onrender.com/allorders?email=${user.email}`, {
+    fetch(`http://localhost:5000/api/v2/allorders?email=${user.email}`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Alert, Button, Container, Form } from "react-bootstrap";
 
 const AddProduct = () => {
@@ -16,7 +16,7 @@ const AddProduct = () => {
 
   const handleProductSubmit = (e) => {
     e.preventDefault();
-    fetch("https://bike-mania.onrender.com/addProduct", {
+    fetch("http://localhost:5000/api/v2/addProduct", {
       method: "POST",
       headers: {
         "content-type": "application/json",

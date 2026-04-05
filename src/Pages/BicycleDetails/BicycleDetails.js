@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Col,
@@ -24,7 +24,7 @@ const BicycleDetails = () => {
 
   useEffect(() => {
     let isMounted = true;
-    fetch(`https://bike-mania.onrender.com/explore/${id}`)
+    fetch(`http://localhost:5000/api/v2/explore/${id}`)
       .then((res) => res.json())
       .then((data) => {
         if (isMounted) {

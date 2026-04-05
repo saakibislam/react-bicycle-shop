@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 
@@ -19,7 +19,7 @@ const MakeReview = ({ orders }) => {
 
   const handleReviewSubmit = (e) => {
     e.preventDefault();
-    fetch("https://bike-mania.onrender.com/reviews", {
+    fetch("http://localhost:5000/api/v2/reviews", {
       method: "POST",
       headers: {
         "content-type": "application/json",

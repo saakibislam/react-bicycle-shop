@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import useFirebase from "../hooks/useFirebase";
 
@@ -28,7 +28,7 @@ const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
       address: deliverAddress,
     };
     // console.log(order);
-    fetch("https://bike-mania.onrender.com/order", {
+    fetch("http://localhost:5000/api/v2/order", {
       method: "POST",
       headers: {
         "content-type": "application/json",

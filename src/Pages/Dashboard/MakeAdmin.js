@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 
 const MakeAdmin = () => {
@@ -12,7 +12,7 @@ const MakeAdmin = () => {
   const handleAdminSubmit = (e) => {
     e.preventDefault();
     const user = { email };
-    fetch("https://bike-mania.onrender.com/users/admin", {
+    fetch("http://localhost:5000/api/v2/users/admin", {
       method: "PUT",
       headers: {
         "content-type": "application/json",

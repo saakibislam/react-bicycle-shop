@@ -1,5 +1,4 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Row } from "react-bootstrap";
 import Loading from "../Shared/Loading/Loading";
 import BestSellCard from "./BestSellCard";
@@ -8,9 +7,9 @@ const BestSell = () => {
   const [bicycles, setBicycles] = useState();
 
   useEffect(() => {
-    axios
-      .get("https://bike-mania.onrender.com/explore")
-      .then((res) => setBicycles(res.data.slice(0, 4)));
+    fetch("http://localhost:5000/api/v2/explore")
+      .then((res) => res.json())
+      .then((data) => setBicycles(data.slice(0, 4)));
 
     return () => setBicycles([]);
   }, []);
