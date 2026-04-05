@@ -4,7 +4,10 @@ import { initializeAuthentication } from "../firebase/firebase.init";
 
 const useFirebase = () => {
   initializeAuthentication();
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : {};
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [authError, setAuthError] = useState("");
   const [admin, setAdmin] = useState(false);
@@ -53,6 +56,7 @@ const useFirebase = () => {
           setAuthError(data.message);
         } else if (data.user) {
           setUser(data.user);
+          localStorage.setItem("user", JSON.stringify(data.user));
           setAuthError("");
           const destination = location?.state?.from || "/";
           history.push(destination);
@@ -93,19 +97,6 @@ const useFirebase = () => {
       });
   }; */
 
-  //observer user state change
-  /*  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser({});
-      }
-      setIsLoading(false);
-    });
-    return () => unsubscribe;
-  }, [auth]); */
-
   // saving register/google login user to database
   /* const saveUser = (email, displayName, method, provider) => {
     const user = { email, displayName, provider };
@@ -124,6 +115,7 @@ const useFirebase = () => {
     setUser({});
     setAuthError("");
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");
     // signOut(auth);
     setIsLoading(false);
   };
