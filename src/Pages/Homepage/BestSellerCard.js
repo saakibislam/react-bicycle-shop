@@ -1,9 +1,8 @@
-import React from "react";
-import { Card, Col, Button } from "react-bootstrap";
+import { Button, Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const BestSellCard = ({ bicycle }) => {
-  const { img, description, price, _id } = bicycle;
+const BestSellerCard = ({ product }) => {
+  const { name, image, description, price, _id } = product;
   return (
     <Col>
       <Card className="p-2 rounded-2 shadow h-100">
@@ -11,10 +10,10 @@ const BestSellCard = ({ bicycle }) => {
           variant="top"
           className="mx-auto"
           alt="Image Source Unavailable"
-          src={img}
+          src={image}
         />
         <Card.Body>
-          <Card.Title>{bicycle.name}</Card.Title>
+          <Card.Title>{name}</Card.Title>
           <Card.Text className="text-muted">
             {description.slice(0, 80)}
           </Card.Text>
@@ -32,4 +31,4 @@ const BestSellCard = ({ bicycle }) => {
   );
 };
 
-export default BestSellCard;
+export default BestSellerCard;
