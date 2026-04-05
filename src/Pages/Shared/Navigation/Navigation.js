@@ -1,4 +1,3 @@
-import React from "react";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
@@ -9,11 +8,11 @@ const Navigation = () => {
     <div>
       <Navbar bg="dark" variant="dark" collapseOnSelect expand="lg">
         <Container>
-          <Navbar.Brand href="/home">Bike Mania</Navbar.Brand>
+          <Navbar.Brand href="/">Bike Mania</Navbar.Brand>
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/">
+              <Nav.Link as={Link} to="/home">
                 Home
               </Nav.Link>
               <Nav.Link as={Link} to="/explore">
