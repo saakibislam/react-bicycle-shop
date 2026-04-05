@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Container, Form, Row } from "react-bootstrap";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import Footer from "../Shared/Footer/Footer";
@@ -6,7 +6,7 @@ import Navigation from "../Shared/Navigation/Navigation";
 import useAuth from "../hooks/useAuth";
 
 const Login = () => {
-  const { loginUser, loginWithGoogle, authError } = useAuth();
+  const { user, loginUser, loginWithGoogle, authError } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const location = useLocation();
@@ -22,6 +22,15 @@ const Login = () => {
   const handleLoginWithGoogle = () => {
     loginWithGoogle(location, history);
   };
+
+  useEffect(() => {
+    // If the user object has an email (or _id), they are logged in
+    // Redirects to homepage and replaces the history entry
+    if (user && user.email) {
+      history.replace("/");
+    }
+  }, [user, history]);
+
   return (
     <div>
       <Navigation></Navigation>
