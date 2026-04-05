@@ -32,11 +32,11 @@ const Navigation = () => {
             </Nav>
             <Nav className="ms-auto">
               {user?.email ? (
-                <Link to="/home">
+                <a href="/">
                   <Button onClick={logOut} variant="outline-danger" size="md">
                     Logout
                   </Button>
-                </Link>
+                </a>
               ) : (
                 <Link to="/login">
                   <Button variant="outline-warning" size="md">

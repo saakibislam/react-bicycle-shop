@@ -1,4 +1,4 @@
-import { getAuth, GoogleAuthProvider, signOut } from "firebase/auth";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { useState } from "react";
 import { initializeAuthentication } from "../firebase/firebase.init";
 
@@ -36,35 +36,6 @@ const useFirebase = () => {
         setIsLoading(false);
       });
   };
-
-  // register user
-  /* const registerUser = (email, password, name, history) => {
-    setIsLoading(true);
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setAuthError("");
-        setUser(userCredential.user);
-        history.push("/");
-        // save user to database
-        saveUser(email, name, "POST", "Usual");
-        // Generating Token
-        getToken(email);
-        // send name to firebase after register
-        updateProfile(auth.currentUser, {
-          displayName: name,
-        })
-          .then(() => {})
-          .catch((error) => {
-            console.log(error.message);
-          });
-      })
-      .catch((error) => {
-        setAuthError(error.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }; */
 
   // email, password login
   const loginUser = (email, password, location, history) => {
@@ -135,19 +106,6 @@ const useFirebase = () => {
     return () => unsubscribe;
   }, [auth]); */
 
-  // checking if user is admin
-  /* useEffect(() => {
-    fetch(`http://localhost:5000/api/v2/users/${user.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.admin) {
-          setAdmin(true);
-        } else {
-          setAdmin(false);
-        }
-      });
-  }, [user.email]); */
-
   // saving register/google login user to database
   /* const saveUser = (email, displayName, method, provider) => {
     const user = { email, displayName, provider };
@@ -160,34 +118,14 @@ const useFirebase = () => {
     }).then();
   }; */
 
-  // Generating JWT Token
-  /*  const getToken = (email) => {
-    fetch("http://localhost:5000/api/v2/token", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ email }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        localStorage.setItem("accessToken", data.token);
-      })
-      .catch((error) => console.dir(error));
-  };
- */
   //logout user
   const logOut = () => {
     setIsLoading(true);
-    signOut(auth)
-      .then(() => {
-        setAuthError("");
-        localStorage.removeItem("accessToken");
-      })
-      .catch((error) => setAuthError(error.message))
-      .finally(() => {
-        setIsLoading(false);
-      });
+    setUser({});
+    setAuthError("");
+    localStorage.removeItem("accessToken");
+    // signOut(auth);
+    setIsLoading(false);
   };
 
   return {
