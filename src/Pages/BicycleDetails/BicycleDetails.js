@@ -14,7 +14,7 @@ import PurchaseModal from "./PurchaseModal";
 
 const BicycleDetails = () => {
   const { id } = useParams();
-  const [bicycle, setBicycle] = useState({});
+  const [product, setProduct] = useState({});
   const [modalShow, setModalShow] = useState(false);
   const [toastShow, setToastShow] = useState(false);
 
@@ -24,11 +24,11 @@ const BicycleDetails = () => {
 
   useEffect(() => {
     let isMounted = true;
-    fetch(`http://localhost:5000/api/v2/explore/${id}`)
+    fetch(`http://localhost:5000/api/v2/products/${id}`)
       .then((res) => res.json())
       .then((data) => {
         if (isMounted) {
-          setBicycle(data);
+          setProduct(data);
         }
       });
     return () => {
@@ -39,11 +39,11 @@ const BicycleDetails = () => {
   return (
     <div>
       <Navigation></Navigation>
-      <h1 className="my-3 text-success">{bicycle.name}</h1>
+      <h1 className="my-3 text-success">{product.name}</h1>
       <Container className="my-5">
         <Row>
           <Col>
-            <img className="img-fluid" src={bicycle.img} alt="" />
+            <img className="img-fluid" src={product.image} alt="" />
           </Col>
           <Col>
             <div
@@ -54,11 +54,11 @@ const BicycleDetails = () => {
               }}
             >
               <div>
-                <h2>{bicycle.name}</h2>
-                <p>{bicycle.description}</p>
+                <h2>{product.name}</h2>
+                <p>{product.description}</p>
               </div>
               <div className="my-3">
-                <h4 className="text-success">Price: ${bicycle.price}</h4>
+                <h4 className="text-success">Price: ${product.price}</h4>
               </div>
               <Button variant="success" onClick={handleShow}>
                 Buy Now
@@ -69,7 +69,7 @@ const BicycleDetails = () => {
         <PurchaseModal
           show={modalShow}
           handleClose={handleClose}
-          bicycle={bicycle}
+          bicycle={product}
           toggleToast={toggleToast}
         ></PurchaseModal>
       </Container>

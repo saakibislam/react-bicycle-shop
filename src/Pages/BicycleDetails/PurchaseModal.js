@@ -28,7 +28,7 @@ const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
       address: deliverAddress,
     };
     // console.log(order);
-    fetch("http://localhost:5000/api/v2/order", {
+    fetch("http://localhost:5000/api/v2/orders", {
       method: "POST",
       headers: {
         "content-type": "application/json",

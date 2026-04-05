@@ -24,10 +24,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     let isMounted = true;
-    fetch(`http://localhost:5000/api/v2/allorders?email=${user.email}`, {
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
+    fetch(`http://localhost:5000/api/v2/orders/user/${user._id}`, {
+      // headers: {
+      //   authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      // },
     })
       .then((res) => res.json())
       .then((data) => {

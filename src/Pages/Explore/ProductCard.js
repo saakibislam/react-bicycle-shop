@@ -13,7 +13,7 @@ const ProductCard = ({ product }) => {
       <Card.Subtitle className="mb-2 text-danger">
         Price: ${product.price}
       </Card.Subtitle>
-      <Link to={`/explore/${product._id}`}>
+      <Link to={`/product/${product._id}`}>
         <Button className="w-100" variant="success">
           Purchase
         </Button>
