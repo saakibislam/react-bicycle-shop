@@ -5,12 +5,37 @@ import { initializeAuthentication } from "../firebase/firebase.init";
 const useFirebase = () => {
   initializeAuthentication();
   const [user, setUser] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [authError, setAuthError] = useState("");
   const [admin, setAdmin] = useState(false);
 
   const auth = getAuth();
   const googleProvider = new GoogleAuthProvider();
+
+  // Register user with email and password
+  const registerUser = (email, password, name, history) => {
+    setIsLoading(true);
+    fetch("http://localhost:5000/api/v2/users/register", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ email, password, name }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.message !== "User registered successfully") {
+          return setAuthError(data.message);
+        }
+        setAuthError("");
+      })
+      .catch((error) => {
+        setAuthError(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   // register user
   /* const registerUser = (email, password, name, history) => {
@@ -173,7 +198,7 @@ const useFirebase = () => {
     setAuthError,
     isLoading,
     setIsLoading,
-    // registerUser,
+    registerUser,
     loginUser,
     // loginWithGoogle,
     logOut,
