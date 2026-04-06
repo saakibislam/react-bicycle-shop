@@ -24,11 +24,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     let isMounted = true;
-    fetch(`http://localhost:5000/api/v2/orders/user/${user._id}`, {
-      // headers: {
-      //   authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      // },
-    })
+    fetch(`http://localhost:5000/api/v2/orders/user/${user._id}`)
       .then((res) => res.json())
       .then((data) => {
         if (isMounted) {
@@ -37,7 +33,7 @@ const Dashboard = () => {
       })
       .catch((error) => console.log(error));
     return () => (isMounted = false);
-  }, [user, orders]);
+  }, [user]);
   return (
     <div style={{ display: "flex", height: "100vh" }}>
       {/* Sidebar  */}
@@ -175,7 +171,10 @@ const Dashboard = () => {
             {/* Dashboard Home Goes here  */}
             <Switch>
               <Route exact path={path}>
-                <DashboardHome orders={orders}></DashboardHome>
+                <DashboardHome
+                  orders={orders}
+                  setOrders={setOrders}
+                ></DashboardHome>
               </Route>
               <Route path={`${path}/pay`}>
                 <Pay></Pay>

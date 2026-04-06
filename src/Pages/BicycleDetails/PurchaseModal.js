@@ -1,48 +1,25 @@
-import { useRef } from "react";
 import { Button, Form, Modal, Row } from "react-bootstrap";
 import useFirebase from "../hooks/useFirebase";
 
 const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
   const { user } = useFirebase();
-  const nameRef = useRef();
-  const emailRef = useRef();
-  const cycleRef = useRef();
-  const dateRef = useRef();
-  const priceRef = useRef();
-  const phoneRef = useRef();
-  const streetRef = useRef();
-  const apartmentRef = useRef();
-  const zipRef = useRef();
-  const cityRef = useRef();
-  const countryRef = useRef();
 
-  const handleOnSubmit = () => {
-    const name = nameRef.current.value;
-    const email = emailRef.current.value;
-    const cycleName = cycleRef.current.value;
-    const purchasedDate = dateRef.current.value;
-    const priceValue = priceRef.current.value;
-    const phone = phoneRef.current.value;
-    const street = streetRef.current.value;
-    const apartment = apartmentRef.current.value;
-    const zip = zipRef.current.value;
-    const city = cityRef.current.value;
-    const country = countryRef.current.value;
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target.elements;
 
     const order = {
-      name,
-      email,
-      phone,
-      street,
-      apartment,
-      zip,
-      city,
-      country,
-      cycleType: cycleName,
-      purchasedOn: purchasedDate,
-      price: priceValue,
+      item: bicycle?._id,
+      apartment: form.apartment.value,
+      street: form.street.value,
+      city: form.city.value,
+      zip: form.zip.value,
+      country: form.country.value,
+      phone: form.phone.value,
+      price: bicycle?.price,
+      user: user?._id,
     };
-    // console.log(order);
+
     fetch("http://localhost:5000/api/v2/orders", {
       method: "POST",
       headers: {
@@ -50,12 +27,19 @@ const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
       },
       body: JSON.stringify(order),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to place order");
+        return res.json();
+      })
       .then(() => {
         handleClose();
         toggleToast();
+      })
+      .catch((error) => {
+        console.error("Error submitting order: ", error);
       });
   };
+
   return (
     <Modal
       show={show}
@@ -66,74 +50,58 @@ const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
     >
       <Modal.Header closeButton>
         <Modal.Title className="text-success">
-          Purchase Form for {bicycle.name}
+          Purchase Form for {bicycle?.name}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div>
-          <Form>
-            <Form.Group
-              className="mb-3 text-start"
-              controlId="exampleForm.ControlInput1"
-            >
+          <Form id="purchase-form" onSubmit={handleOnSubmit}>
+            <Form.Group className="mb-3 text-start">
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
-                defaultValue={user.displayName}
-                ref={nameRef}
+                name="name"
+                defaultValue={user.name}
                 placeholder="Your Name"
+                required
               />
             </Form.Group>
-            <Form.Group
-              className="mb-3 text-start"
-              controlId="exampleForm.ControlInput1"
-            >
+            <Form.Group className="mb-3 text-start">
               <Form.Label>Email address</Form.Label>
               <Form.Control
                 type="email"
+                name="email"
                 defaultValue={user.email}
-                ref={emailRef}
                 placeholder="name@example.com"
+                required
               />
             </Form.Group>
             <Row xs={1} sm={1} md={2} className="g-4">
-              <Form.Group
-                className="mb-3 text-start"
-                controlId="exampleForm.ControlInput1"
-              >
+              <Form.Group className="mb-3 text-start">
                 <Form.Label>Cycle Type</Form.Label>
                 <Form.Control
                   type="text"
-                  defaultValue={bicycle.name}
-                  ref={cycleRef}
+                  defaultValue={bicycle?.name}
                   placeholder="Cycle Name"
                   disabled
                 />
               </Form.Group>
-              <Form.Group
-                className="mb-3 text-start"
-                controlId="exampleForm.ControlInput1"
-              >
+              <Form.Group className="mb-3 text-start">
                 <Form.Label>Purchase Date</Form.Label>
                 <Form.Control
                   type="text"
                   defaultValue={new Date().toLocaleDateString()}
-                  ref={dateRef}
                   disabled
                   placeholder="Purchased Date"
                 />
               </Form.Group>
             </Row>
             <Row xs={1} sm={1} md={2} className="g-4">
-              <Form.Group
-                className="mb-3 text-start"
-                controlId="exampleForm.ControlInput1"
-              >
+              <Form.Group className="mb-3 text-start">
                 <Form.Label>Price</Form.Label>
                 <Form.Control
                   type="text"
-                  defaultValue={bicycle.price}
-                  ref={priceRef}
+                  defaultValue={bicycle?.price}
                   disabled
                   placeholder="Product Price"
                 />
@@ -143,7 +111,8 @@ const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
                 <Form.Control
                   required
                   type="text"
-                  ref={phoneRef}
+                  name="phone"
+                  defaultValue={user.phone}
                   placeholder="Phone Number"
                 />
               </Form.Group>
@@ -153,7 +122,8 @@ const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
               <Form.Control
                 required
                 type="text"
-                ref={streetRef}
+                name="street"
+                defaultValue={user.street}
                 placeholder="Street Address"
               />
             </Form.Group>
@@ -162,7 +132,8 @@ const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
                 <Form.Label>Apartment</Form.Label>
                 <Form.Control
                   type="text"
-                  ref={apartmentRef}
+                  name="apartment"
+                  defaultValue={user.apartment}
                   placeholder="Apartment, suite, etc."
                 />
               </Form.Group>
@@ -171,7 +142,8 @@ const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
                 <Form.Control
                   required
                   type="text"
-                  ref={cityRef}
+                  name="city"
+                  defaultValue={user.city}
                   placeholder="City"
                 />
               </Form.Group>
@@ -182,7 +154,8 @@ const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
                 <Form.Control
                   required
                   type="text"
-                  ref={zipRef}
+                  name="zip"
+                  defaultValue={user.zip}
                   placeholder="ZIP Code"
                 />
               </Form.Group>
@@ -191,7 +164,8 @@ const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
                 <Form.Control
                   required
                   type="text"
-                  ref={countryRef}
+                  name="country"
+                  defaultValue={user.country}
                   placeholder="Country"
                 />
               </Form.Group>
@@ -200,7 +174,7 @@ const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={handleOnSubmit} variant="success">
+        <Button type="submit" form="purchase-form" variant="success">
           Purchase
         </Button>
       </Modal.Footer>

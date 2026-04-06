@@ -1,19 +1,28 @@
 import { Button, Container } from "react-bootstrap";
 
-const DashboardHome = ({ orders }) => {
+const DashboardHome = ({ orders, setOrders }) => {
   // Cancel Order
   const handleOrderCancel = (orderId) => {
     const confirmationForDelete = window.confirm(
       "Are you sure you want to cancel this order?",
     );
     if (confirmationForDelete) {
-      fetch(`http://localhost:5000/api/v2/cancel?orderId=${orderId}`, {
+      fetch(`http://localhost:5000/api/v2/orders/${orderId}`, {
         method: "DELETE",
-      });
+      })
+        .then((res) => {
+          if (res.ok) {
+            const remainingOrders = orders.filter(
+              (order) => order._id !== orderId,
+            );
+            setOrders(remainingOrders);
+          }
+        })
+        .catch((error) => console.error("Error cancelling order:", error));
     }
   };
 
-  if (orders?.length === 0)
+  if (orders.length === 0)
     return (
       <h3>
         Orders: <small>{orders?.length}</small>
@@ -50,11 +59,13 @@ const DashboardHome = ({ orders }) => {
                 <tbody>
                   {orders?.map((order) => (
                     <tr key={order._id}>
-                      <td>{order.buyerName}</td>
-                      <td>{order.buyerEmail}</td>
-                      <td>{order.cycleType}</td>
-                      <td>{order.price}</td>
-                      <td>{order.purchasedOn}</td>
+                      <td>{order.user.name}</td>
+                      <td>{order.user.email}</td>
+                      <td>{order.item?.name}</td>
+                      <td>{order.item?.price}</td>
+                      <td>
+                        {new Date(order.dateOrdered).toLocaleDateString()}
+                      </td>
                       <td>
                         <Button
                           onClick={() => handleOrderCancel(order._id)}
