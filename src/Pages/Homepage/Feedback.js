@@ -7,7 +7,13 @@ const Feedback = () => {
   useEffect(() => {
     fetch("http://localhost:5000/api/v2/reviews")
       .then((res) => res.json())
-      .then((data) => setReviews(data));
+      .then((data) => {
+        if (data.length > 4) {
+          setReviews(data.slice(0, 4));
+        } else {
+          setReviews(data);
+        }
+      });
     return () => setReviews([]);
   }, []);
 
@@ -23,11 +29,11 @@ const Feedback = () => {
               <img
                 style={{ width: "100px" }}
                 className="mb-5 rounded-circle"
-                src={review.img}
+                src={review.image}
                 alt="User Avatar Cannot Load"
               />
               <h5>{review.name}</h5>
-              <p className="w-75 mx-auto">{review.description}</p>
+              <p className="w-75 mx-auto">{review.comment}</p>
             </div>
           </Carousel.Item>
         ))}

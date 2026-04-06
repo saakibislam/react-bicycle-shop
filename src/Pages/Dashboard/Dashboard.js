@@ -58,7 +58,7 @@ const Dashboard = () => {
               color="success"
               borderType="pill"
             >
-              {user?.displayName}
+              {user.name}
             </CDBBadge>
           </CDBSidebarHeader>
 
