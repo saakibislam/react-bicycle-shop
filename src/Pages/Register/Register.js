@@ -9,8 +9,8 @@ import Navigation from "../Shared/Navigation/Navigation";
 const Register = () => {
   const [registerData, setRegisterData] = useState({});
   const [passwordMatch, setPasswordMatch] = useState(false);
-  const [show, setShow] = useState(true);
-  const { user, registerUser, isLoading, authError } = useAuth();
+  const [show, setShow] = useState(false);
+  const { user, registerUser, isLoading, authError, setAuthError } = useAuth();
   const history = useHistory();
 
   const handleOnBlur = (e) => {
@@ -22,18 +22,25 @@ const Register = () => {
     setRegisterData(newRegisterData);
   };
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
     if (registerData.password !== registerData.password2) {
       setPasswordMatch(true);
       return;
     }
-    registerUser(
-      registerData.email,
-      registerData.password,
-      registerData.name,
-      history,
-    );
+
+    try {
+      await registerUser(
+        registerData.email,
+        registerData.password,
+        registerData.name,
+        history,
+      );
+      setShow(true);
+      setAuthError("");
+    } catch (error) {
+      // The error is already handled and caught in useFirebase.js
+    }
   };
 
   useEffect(() => {
@@ -48,20 +55,18 @@ const Register = () => {
     <div>
       <Navigation></Navigation>
       <Container>
-        {user?.email && (
-          <Toast
-            bg="success"
-            className="ms-auto"
-            onClose={() => setShow(false)}
-            show={show}
-            delay={3000}
-            autohide
-          >
-            <Toast.Body className="text-white">
-              Woohoo, you're reading this text in a Toast!
-            </Toast.Body>
-          </Toast>
-        )}
+        <Toast
+          bg="success"
+          className="ms-auto"
+          onClose={() => setShow(false)}
+          show={show}
+          delay={3000}
+          autohide
+        >
+          <Toast.Body className="text-white">
+            Successfully Registered! Please login to continue.
+          </Toast.Body>
+        </Toast>
         <Row className="col-md-6 mx-auto my-4">
           {authError && <Alert variant="danger">{authError}</Alert>}
           {/* w-75 mx-auto my-2 shadow p-5 */}
@@ -123,7 +128,7 @@ const Register = () => {
 
               <p>
                 Already registered?{" "}
-                <Link to="/login">
+                <Link to="/login" onClick={() => setAuthError("")}>
                   <span className="text-success fw-bold">Login</span>
                 </Link>
               </p>

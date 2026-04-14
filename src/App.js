@@ -3,7 +3,6 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import "./App.css";
 import About from "./Pages/About/About";
 import AuthProvider from "./Pages/AuthProvider/AuthProvider";
-import BicycleDetails from "./Pages/BicycleDetails/BicycleDetails";
 import Contact from "./Pages/Contact/Contact";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Explore from "./Pages/Explore/Explore";
@@ -11,6 +10,7 @@ import Homepage from "./Pages/Homepage/Homepage";
 import Login from "./Pages/Login/Login";
 import NotFound from "./Pages/NotFound/NotFound";
 import PrivateRoute from "./Pages/PrivateRoute/PrivateRoute";
+import ProductDetails from "./Pages/ProductDetails/BicycleDetails";
 import Register from "./Pages/Register/Register";
 import Success from "./Pages/Success/Success";
 
@@ -30,7 +30,7 @@ function App() {
               <Explore></Explore>
             </Route>
             <PrivateRoute path="/product/:id">
-              <BicycleDetails></BicycleDetails>
+              <ProductDetails></ProductDetails>
             </PrivateRoute>
             <PrivateRoute path="/dashboard">
               <Dashboard></Dashboard>

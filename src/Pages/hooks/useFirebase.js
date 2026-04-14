@@ -15,66 +15,68 @@ const useFirebase = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [authError, setAuthError] = useState("");
-  const [admin, setAdmin] = useState(false);
 
   const auth = getAuth();
   const googleProvider = new GoogleAuthProvider();
 
   // Register user with email and password
-  const registerUser = (email, password, name, history) => {
+  const registerUser = async (email, password, name, history) => {
     setIsLoading(true);
-    fetch("http://localhost:5000/api/v2/users/register", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ email, password, name }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message !== "User registered successfully") {
-          return setAuthError(data.message);
-        }
-        setAuthError("");
-      })
-      .catch((error) => {
-        setAuthError(error.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
+    try {
+      const res = await fetch("http://localhost:5000/api/v2/users/register", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ email, password, name }),
       });
+      const data = await res.json();
+      if (data.message !== "User registered successfully") {
+        setAuthError(data.message);
+        throw new Error(data.message);
+      }
+      setAuthError("");
+      return data;
+    } catch (error) {
+      setAuthError(error.message);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // email, password login
-  const loginUser = (email, password, location, history) => {
+  const loginUser = async (email, password, location, history) => {
     setIsLoading(true);
-    fetch("http://localhost:5000/api/v2/users/login", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message) {
-          setAuthError(data.message);
-        } else if (data.user) {
-          setUser(data.user);
-          localStorage.setItem("user", JSON.stringify(data.user));
-          setAuthError("");
-          const destination = location?.state?.from || "/";
-          history.push(destination);
-          // Generating Token
-          // getToken(email);
-        }
-      })
-      .catch((error) => {
-        setAuthError(error.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
+    try {
+      const res = await fetch("http://localhost:5000/api/v2/users/login", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
       });
+      const data = await res.json();
+
+      if (data.message) {
+        setAuthError(data.message);
+        throw new Error(data.message);
+      } else if (data.user) {
+        setUser(data.user);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        setAuthError("");
+        const destination = location?.state?.from || "/";
+        history.push(destination);
+        // Generating Token
+        // getToken(email);
+        return data.user;
+      }
+    } catch (error) {
+      setAuthError(error.message);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // login using google
@@ -114,7 +116,6 @@ const useFirebase = () => {
   return {
     user,
     setUser,
-    admin,
     authError,
     setAuthError,
     isLoading,

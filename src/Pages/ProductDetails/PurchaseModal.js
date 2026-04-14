@@ -1,7 +1,7 @@
 import { Button, Form, Modal, Row } from "react-bootstrap";
 import useFirebase from "../hooks/useFirebase";
 
-const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
+const PurchaseModal = ({ product, show, handleClose, toggleToast }) => {
   const { user } = useFirebase();
 
   const handleOnSubmit = (e) => {
@@ -9,14 +9,14 @@ const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
     const form = e.target.elements;
 
     const order = {
-      item: bicycle?._id,
+      item: product?._id,
       apartment: form.apartment.value,
       street: form.street.value,
       city: form.city.value,
       zip: form.zip.value,
       country: form.country.value,
       phone: form.phone.value,
-      price: bicycle?.price,
+      price: product?.price,
       user: user?._id,
     };
 
@@ -50,7 +50,7 @@ const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
     >
       <Modal.Header closeButton>
         <Modal.Title className="text-success">
-          Purchase Form for {bicycle?.name}
+          Purchase Form for {product?.name}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -81,7 +81,7 @@ const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
                 <Form.Label>Cycle Type</Form.Label>
                 <Form.Control
                   type="text"
-                  defaultValue={bicycle?.name}
+                  defaultValue={product?.name}
                   placeholder="Cycle Name"
                   disabled
                 />
@@ -101,7 +101,7 @@ const PurchaseModal = ({ bicycle, show, handleClose, toggleToast }) => {
                 <Form.Label>Price</Form.Label>
                 <Form.Control
                   type="text"
-                  defaultValue={bicycle?.price}
+                  defaultValue={product?.price}
                   disabled
                   placeholder="Product Price"
                 />

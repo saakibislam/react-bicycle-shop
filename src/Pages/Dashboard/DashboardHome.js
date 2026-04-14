@@ -39,7 +39,7 @@ const DashboardHome = ({ orders, setOrders }) => {
             Manage Orders
           </div>
           <div className="card-body">
-            <div className="table-responsive">
+            <div className="table-responsive-md">
               <table
                 className="table table-bordered"
                 id="dataTable"

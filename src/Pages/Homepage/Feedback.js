@@ -13,7 +13,8 @@ const Feedback = () => {
         } else {
           setReviews(data);
         }
-      });
+      })
+      .catch((error) => console.log(error));
     return () => setReviews([]);
   }, []);
 

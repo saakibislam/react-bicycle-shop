@@ -6,7 +6,8 @@ import Navigation from "../Shared/Navigation/Navigation";
 import useAuth from "../hooks/useAuth";
 
 const Login = () => {
-  const { user, loginUser, loginWithGoogle, authError } = useAuth();
+  const { user, loginUser, loginWithGoogle, authError, setAuthError } =
+    useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const location = useLocation();
@@ -37,7 +38,7 @@ const Login = () => {
       <Container>
         {/* Login Failed Alert  */}
         {authError && (
-          <Alert className="col-md-6 mx-auto" variant="danger">
+          <Alert className="col-md-6 mx-auto my-2" variant="danger">
             {authError}
           </Alert>
         )}
@@ -69,7 +70,7 @@ const Login = () => {
             <p>
               <small>
                 New User?{" "}
-                <Link to="/register">
+                <Link to="/register" onClick={() => setAuthError("")}>
                   <span className="text-success fw-bold">
                     Create an account
                   </span>

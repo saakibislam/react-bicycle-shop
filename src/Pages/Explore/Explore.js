@@ -11,7 +11,8 @@ const Explore = () => {
   useEffect(() => {
     fetch("http://localhost:5000/api/v2/products")
       .then((res) => res.json())
-      .then((data) => setProducts(data));
+      .then((data) => setProducts(data))
+      .catch((error) => console.log(error));
   }, []);
 
   if (!products) return <Loading></Loading>;

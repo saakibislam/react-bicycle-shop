@@ -12,14 +12,14 @@ import { Badge, Button } from "react-bootstrap";
 import { NavLink, Route, Switch, useRouteMatch } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import AddProduct from "./AddProduct";
+import AdminPanel from "./AdminPanel";
 import DashboardHome from "./DashboardHome";
-import MakeAdmin from "./MakeAdmin";
 import MakeReview from "./MakeReview";
 import Pay from "./Pay";
 
 const Dashboard = () => {
   let { path, url } = useRouteMatch();
-  const { user, admin, logOut } = useAuth();
+  const { user, logOut } = useAuth();
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -95,11 +95,11 @@ const Dashboard = () => {
                 </NavLink>
               </CDBSidebarMenuItem>
 
-              {admin ? (
+              {user.isAdmin ? (
                 <>
                   <CDBSidebarMenuItem>
                     <NavLink
-                      to={`${url}/makeAdmin`}
+                      to={`${url}/admin-panel`}
                       activeStyle={{
                         color: "orange",
                         fontWeight: "bold",
@@ -107,7 +107,7 @@ const Dashboard = () => {
                       }}
                     >
                       <i className="fas fa-user-plus m-1"></i>
-                      Make Admin
+                      Admin Panel
                     </NavLink>
                   </CDBSidebarMenuItem>
                   <CDBSidebarMenuItem>
@@ -179,8 +179,8 @@ const Dashboard = () => {
               <Route path={`${path}/pay`}>
                 <Pay></Pay>
               </Route>
-              <Route path={`${path}/makeAdmin`}>
-                <MakeAdmin></MakeAdmin>
+              <Route path={`${path}/admin-panel`}>
+                <AdminPanel></AdminPanel>
               </Route>
               <Route path={`${path}/addProduct`}>
                 <AddProduct></AddProduct>

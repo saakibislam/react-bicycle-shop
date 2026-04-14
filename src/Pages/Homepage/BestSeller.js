@@ -9,7 +9,8 @@ const BestSeller = () => {
   useEffect(() => {
     fetch("http://localhost:5000/api/v2/products")
       .then((res) => res.json())
-      .then((data) => setProducts(data.slice(0, 4)));
+      .then((data) => setProducts(data.slice(0, 4)))
+      .catch((error) => console.log(error));
 
     return () => setProducts([]);
   }, []);

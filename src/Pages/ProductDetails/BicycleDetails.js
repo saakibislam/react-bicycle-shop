@@ -12,7 +12,7 @@ import Footer from "../Shared/Footer/Footer";
 import Navigation from "../Shared/Navigation/Navigation";
 import PurchaseModal from "./PurchaseModal";
 
-const BicycleDetails = () => {
+const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const [modalShow, setModalShow] = useState(false);
@@ -30,7 +30,8 @@ const BicycleDetails = () => {
         if (isMounted) {
           setProduct(data);
         }
-      });
+      })
+      .catch((error) => console.log(error));
     return () => {
       isMounted = false;
     };
@@ -69,7 +70,7 @@ const BicycleDetails = () => {
         <PurchaseModal
           show={modalShow}
           handleClose={handleClose}
-          bicycle={product}
+          product={product}
           toggleToast={toggleToast}
         ></PurchaseModal>
       </Container>
@@ -94,4 +95,4 @@ const BicycleDetails = () => {
   );
 };
 
-export default BicycleDetails;
+export default ProductDetails;
