@@ -12,7 +12,7 @@ import { Badge, Button } from "react-bootstrap";
 import { NavLink, Route, Switch, useRouteMatch } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import AddProduct from "./AddProduct";
-import AdminPanel from "./AdminPanel";
+import AdminPanel from "./AdminPanel/AdminPanel";
 import DashboardHome from "./DashboardHome";
 import MakeReview from "./MakeReview";
 import Pay from "./Pay";

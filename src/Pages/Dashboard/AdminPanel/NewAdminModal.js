@@ -25,7 +25,6 @@ const NewAdminModal = ({
         body: JSON.stringify({ email, role: "admin" }),
       });
       const data = await response.json();
-      console.log(data);
 
       if (!data.user) {
         setToastMessage({
@@ -51,9 +50,11 @@ const NewAdminModal = ({
 
   return (
     <>
-      <Button variant="success" onClick={handleAdminModalShow}>
-        Add New Admin
-      </Button>
+      <div className="d-flex justify-content-end m-3">
+        <Button variant="success" onClick={handleAdminModalShow}>
+          Add Admin
+        </Button>
+      </div>
       <Modal show={adminModalShow} onHide={handleAdminModalClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add New Admin</Modal.Title>
@@ -76,8 +77,8 @@ const NewAdminModal = ({
           <Button variant="secondary" onClick={handleAdminModalClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleAdminSubmit}>
-            Save Changes
+          <Button variant="outline-success" onClick={handleAdminSubmit}>
+            Apply
           </Button>
         </Modal.Footer>
       </Modal>

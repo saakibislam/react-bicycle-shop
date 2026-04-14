@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import useAuth from "../hooks/useAuth";
-import Toaster from "../Shared/Toaster/Toaster";
+import useAuth from "../../hooks/useAuth";
+import Toaster from "../../Shared/Toaster/Toaster";
 import AdminTable from "./AdminTable";
 import NewAdminModal from "./NewAdminModal";
 
