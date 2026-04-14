@@ -58,7 +58,7 @@ const AdminTable = ({
               <td>{admin.email}</td>
               <td>
                 <Button
-                  variant="outline-danger"
+                  variant="danger"
                   size="sm"
                   onClick={() => removeAdmin(admin._id)}
                 >

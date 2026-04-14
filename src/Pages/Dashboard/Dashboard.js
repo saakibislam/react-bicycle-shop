@@ -11,11 +11,11 @@ import { useEffect, useState } from "react";
 import { Badge, Button } from "react-bootstrap";
 import { NavLink, Route, Switch, useRouteMatch } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import AddProduct from "./AddProduct";
 import AdminPanel from "./AdminPanel/AdminPanel";
 import DashboardHome from "./DashboardHome";
 import MakeReview from "./MakeReview";
 import Pay from "./Pay";
+import ProductsDashboard from "./Products/ProductsDashboard";
 
 const Dashboard = () => {
   let { path, url } = useRouteMatch();
@@ -183,7 +183,7 @@ const Dashboard = () => {
                 <AdminPanel></AdminPanel>
               </Route>
               <Route path={`${path}/addProduct`}>
-                <AddProduct></AddProduct>
+                <ProductsDashboard />
               </Route>
               <Route path={`${path}/makeReview`}>
                 <MakeReview orders={orders}></MakeReview>
