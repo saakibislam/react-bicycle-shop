@@ -1,6 +1,13 @@
 import { Button, Card, Table } from "react-bootstrap";
 
-const AdminTable = ({ admins, fetchAdmins }) => {
+const AdminTable = ({
+  admins,
+  fetchAdmins,
+  toastShow,
+  setToastShow,
+  toastMessage,
+  setToastMessage,
+}) => {
   const removeAdmin = async (adminId) => {
     try {
       const response = await fetch(
@@ -19,6 +26,11 @@ const AdminTable = ({ admins, fetchAdmins }) => {
       );
       const data = await response.json();
       if (data.user) {
+        setToastMessage({
+          variant: "danger",
+          message: data.message || "Admin removed successfully",
+        });
+        setToastShow(true);
         fetchAdmins();
       }
     } catch (error) {

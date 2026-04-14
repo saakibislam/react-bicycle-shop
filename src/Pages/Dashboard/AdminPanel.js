@@ -5,10 +5,10 @@ import AdminTable from "./AdminTable";
 import NewAdminModal from "./NewAdminModal";
 
 const AdminPanel = () => {
-  const [success, setSuccess] = useState(false);
   const [admins, setAdmins] = useState([]);
-  const [toastShow, setToastShow] = useState(true);
   const { user } = useAuth();
+  const [toastShow, setToastShow] = useState(false);
+  const [toastMessage, setToastMessage] = useState({});
 
   const fetchAdmins = async () => {
     try {
@@ -30,17 +30,24 @@ const AdminPanel = () => {
   return (
     <div>
       {admins.length ? <h3>Admin Panel</h3> : <h3>No Admins Found</h3>}
-      <NewAdminModal setSuccess={setSuccess} fetchAdmins={fetchAdmins} />
-      {/* {success && <Alert variant="success">New Admin Added</Alert>} */}
-      {admins.length > 0 && (
-        <AdminTable admins={admins} fetchAdmins={fetchAdmins} />
-      )}
-      <Toaster
-        variant="success"
-        message="New Admin Added"
-        show={toastShow}
-        setShow={setToastShow}
+      <NewAdminModal
+        fetchAdmins={fetchAdmins}
+        toastShow={toastShow}
+        setToastShow={setToastShow}
+        toastMessage={toastMessage}
+        setToastMessage={setToastMessage}
       />
+      {admins.length > 0 && (
+        <AdminTable
+          admins={admins}
+          fetchAdmins={fetchAdmins}
+          toastShow={toastShow}
+          setToastShow={setToastShow}
+          toastMessage={toastMessage}
+          setToastMessage={setToastMessage}
+        />
+      )}
+      <Toaster toast={toastMessage} show={toastShow} setShow={setToastShow} />
     </div>
   );
 };
