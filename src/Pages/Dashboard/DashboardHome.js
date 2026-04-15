@@ -33,7 +33,7 @@ const DashboardHome = ({ orders, setOrders }) => {
     <div>
       {/* Table  */}
       <Container>
-        <div className="card m-4">
+        <div className="card my-4">
           <div className="card-header">
             <i className="fas fa-table mr-1"></i>
             Manage Orders
@@ -49,10 +49,11 @@ const DashboardHome = ({ orders, setOrders }) => {
                 <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Email</th>
+                    <th>Address</th>
                     <th>Bicycle Type</th>
                     <th>Price ($)</th>
                     <th>Purchased date</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -60,20 +61,46 @@ const DashboardHome = ({ orders, setOrders }) => {
                   {orders?.map((order) => (
                     <tr key={order._id}>
                       <td>{order.user.name}</td>
-                      <td>{order.user.email}</td>
+                      <td>
+                        {[
+                          order.apartment,
+                          order.street,
+                          order.city,
+                          order.zip,
+                          order.country,
+                        ]
+                          .filter(Boolean)
+                          .join(", ")}
+                      </td>
                       <td>{order.item?.name}</td>
                       <td>{order.item?.price}</td>
                       <td>
                         {new Date(order.dateOrdered).toLocaleDateString()}
                       </td>
                       <td>
-                        <Button
-                          onClick={() => handleOrderCancel(order._id)}
-                          variant="danger"
-                          size="sm"
+                        <span
+                          className={`fw-bold ${order.status === "Confirmed" ? "text-success" : "text-warning"}`}
                         >
-                          Cancel
-                        </Button>
+                          {order.status || "Pending"}
+                        </span>
+                      </td>
+                      <td>
+                        {order.status === "Confirmed" ? (
+                          <span
+                            className="text-muted"
+                            style={{ fontSize: "0.9rem" }}
+                          >
+                            Not Allowed
+                          </span>
+                        ) : (
+                          <Button
+                            onClick={() => handleOrderCancel(order._id)}
+                            variant="danger"
+                            size="sm"
+                          >
+                            Cancel
+                          </Button>
+                        )}
                       </td>
                     </tr>
                   ))}

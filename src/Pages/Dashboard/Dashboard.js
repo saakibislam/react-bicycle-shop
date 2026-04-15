@@ -9,7 +9,13 @@ import {
 } from "cdbreact";
 import { useEffect, useState } from "react";
 import { Badge, Button } from "react-bootstrap";
-import { NavLink, Route, Switch, useRouteMatch } from "react-router-dom";
+import {
+  NavLink,
+  Redirect,
+  Route,
+  Switch,
+  useRouteMatch,
+} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import AdminPanel from "./AdminPanel/AdminPanel";
 import DashboardHome from "./DashboardHome";
@@ -177,16 +183,23 @@ const Dashboard = () => {
                 ></DashboardHome>
               </Route>
               <Route path={`${path}/pay`}>
-                <Pay></Pay>
+                <Pay orders={orders} setOrders={setOrders}></Pay>
               </Route>
-              <Route path={`${path}/admin-panel`}>
-                <AdminPanel></AdminPanel>
-              </Route>
-              <Route path={`${path}/addProduct`}>
-                <ProductsDashboard />
-              </Route>
+              {user?.isAdmin && (
+                <Route path={`${path}/admin-panel`}>
+                  <AdminPanel></AdminPanel>
+                </Route>
+              )}
+              {user?.isAdmin && (
+                <Route path={`${path}/addProduct`}>
+                  <ProductsDashboard />
+                </Route>
+              )}
               <Route path={`${path}/makeReview`}>
                 <MakeReview orders={orders}></MakeReview>
+              </Route>
+              <Route path="*">
+                <Redirect to={path} />
               </Route>
             </Switch>
           </div>
