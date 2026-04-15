@@ -42,7 +42,7 @@ const ProductDetails = () => {
       <Navigation></Navigation>
       <h1 className="my-3 text-success">{product.name}</h1>
       <Container className="my-5">
-        <Row>
+        <Row xs={1} md={2} className="g-5 align-items-center">
           <Col>
             <img className="img-fluid" src={product.image} alt="" />
           </Col>
@@ -50,9 +50,9 @@ const ProductDetails = () => {
             <div
               style={{
                 boxShadow: "0px 0px 15px lightgray",
-                height: "500px",
                 padding: "20px",
               }}
+              className="text-start"
             >
               <div>
                 <h2>{product.name}</h2>
@@ -61,9 +61,15 @@ const ProductDetails = () => {
               <div className="my-3">
                 <h4 className="text-success">Price: ${product.price}</h4>
               </div>
-              <Button variant="success" onClick={handleShow}>
-                Buy Now
-              </Button>
+              <div className="d-grid d-lg-block text-lg-center mt-4">
+                <Button
+                  variant="success"
+                  onClick={handleShow}
+                  className="px-lg-5 py-lg-2"
+                >
+                  Buy Now
+                </Button>
+              </div>
             </div>
           </Col>
         </Row>

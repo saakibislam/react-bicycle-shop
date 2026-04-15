@@ -43,7 +43,11 @@ const Dashboard = () => {
   return (
     <div style={{ display: "flex", height: "100vh" }}>
       {/* Sidebar  */}
-      <div>
+      <div
+        style={{
+          height: "100vh",
+        }}
+      >
         <CDBSidebar textColor="#fff" backgroundColor="#333">
           <CDBSidebarHeader
             prefix={<i className="fa fa-bars fa-large m-1"></i>}
@@ -56,7 +60,7 @@ const Dashboard = () => {
               Logo Here
             </a>
             <CDBBadge
-              className="d-block mt-3 fs-5"
+              className="d-block mt-3 fs-5 text-truncate"
               color="success"
               borderType="pill"
             >
@@ -131,22 +135,20 @@ const Dashboard = () => {
                   </CDBSidebarMenuItem>
                 </>
               ) : (
-                <></>
+                <CDBSidebarMenuItem>
+                  <NavLink
+                    to={`${url}/makeReview`}
+                    activeStyle={{
+                      color: "orange",
+                      fontWeight: "bold",
+                      fontSize: "18px",
+                    }}
+                  >
+                    <i className="far fa-comment-dots m-1"></i>
+                    Review Product
+                  </NavLink>
+                </CDBSidebarMenuItem>
               )}
-
-              <CDBSidebarMenuItem>
-                <NavLink
-                  to={`${url}/makeReview`}
-                  activeStyle={{
-                    color: "orange",
-                    fontWeight: "bold",
-                    fontSize: "18px",
-                  }}
-                >
-                  <i className="far fa-comment-dots m-1"></i>
-                  Review Product
-                </NavLink>
-              </CDBSidebarMenuItem>
             </CDBSidebarMenu>
           </CDBSidebarContent>
 

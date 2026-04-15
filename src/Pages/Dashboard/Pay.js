@@ -13,10 +13,9 @@ import {
   Col,
   Container,
   Form,
+  Modal,
   Row,
   Spinner,
-  Toast,
-  ToastContainer,
 } from "react-bootstrap";
 
 // Replace with your own Stripe Publishable Key.
@@ -159,6 +158,7 @@ const testCards = [
 
 const Pay = ({ orders, setOrders }) => {
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showTestCards, setShowTestCards] = useState(false);
 
   // Only show orders that haven't been confirmed yet
   const pendingOrders = orders?.filter((o) => o.status !== "Confirmed") || [];
@@ -182,13 +182,29 @@ const Pay = ({ orders, setOrders }) => {
 
   const copyToClipboard = (number) => {
     navigator.clipboard.writeText(number);
+    setShowTestCards(false);
     alert(
       "Card number copied to clipboard! You can now paste it into the card field.",
     );
   };
 
   return (
-    <>
+    <div className="position-relative">
+      {/* Top Right Floating Button */}
+      <Button
+        variant="warning"
+        className="shadow-sm"
+        style={{
+          position: "absolute",
+          top: "15px",
+          right: "20px",
+          zIndex: 1000,
+        }}
+        onClick={() => setShowTestCards(true)}
+      >
+        Demo Cards
+      </Button>
+
       <Container className="py-5">
         <Row className="justify-content-center">
           <Col md={8} lg={6}>
@@ -223,8 +239,8 @@ const Pay = ({ orders, setOrders }) => {
                 {selectedOrder ? (
                   <>
                     <p className="text-center text-muted mb-4">
-                      Please use one of the floating test cards provided to
-                      simulate a payment.
+                      Click the <strong>Demo Cards</strong> button in the top
+                      right to get a test card.
                     </p>
                     <Elements stripe={stripePromise}>
                       <CheckoutForm
@@ -245,42 +261,50 @@ const Pay = ({ orders, setOrders }) => {
         </Row>
       </Container>
 
-      {/* Floating Test Cards */}
-      <ToastContainer
-        position="bottom-end"
-        className="p-4"
-        style={{ zIndex: 1050, position: "fixed" }}
+      {/* Modal for Test Cards */}
+      <Modal
+        show={showTestCards}
+        onHide={() => setShowTestCards(false)}
+        centered
       >
-        {testCards.map((card, idx) => (
-          <Toast
-            key={idx}
-            onClose={() => {}}
-            show={true}
-            className="mb-2 shadow-lg border-0"
-          >
-            <Toast.Header closeButton={false} className="bg-light">
-              <strong className="me-auto text-primary">
-                {card.brand} Test Card
-              </strong>
-              <small className="text-muted">Click to copy</small>
-            </Toast.Header>
-            <Toast.Body
-              style={{ cursor: "pointer", backgroundColor: "#fff" }}
-              onClick={() => copyToClipboard(card.number)}
-              title="Click to copy card number"
-            >
-              <div className="mb-1" style={{ fontSize: "15px" }}>
-                <strong>Number:</strong> {card.display} 📋
-              </div>
-              <div className="text-muted" style={{ fontSize: "13px" }}>
-                <strong>Exp:</strong> {card.exp} &nbsp;|&nbsp;{" "}
-                <strong>CVV:</strong> {card.cvv}
-              </div>
-            </Toast.Body>
-          </Toast>
-        ))}
-      </ToastContainer>
-    </>
+        <Modal.Header closeButton>
+          <Modal.Title className="text-primary">
+            Available Test Cards
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p className="text-muted mb-3">
+            Click any card below to copy its number.
+          </p>
+          <div className="d-flex flex-column gap-3">
+            {testCards.map((card, idx) => (
+              <Card
+                key={idx}
+                className="shadow-sm border-primary"
+                onClick={() => copyToClipboard(card.number)}
+                style={{ cursor: "pointer" }}
+              >
+                <Card.Body className="p-3">
+                  <div className="d-flex justify-content-between align-items-center mb-1">
+                    <strong className="text-primary">
+                      {card.brand} Test Card
+                    </strong>
+                    <small className="text-muted">📋 Click to copy</small>
+                  </div>
+                  <div style={{ fontSize: "16px" }}>
+                    <strong>Number:</strong> {card.display}
+                  </div>
+                  <div className="text-muted mt-1" style={{ fontSize: "14px" }}>
+                    <strong>Exp:</strong> {card.exp} &nbsp;|&nbsp;{" "}
+                    <strong>CVV:</strong> {card.cvv}
+                  </div>
+                </Card.Body>
+              </Card>
+            ))}
+          </div>
+        </Modal.Body>
+      </Modal>
+    </div>
   );
 };
 
