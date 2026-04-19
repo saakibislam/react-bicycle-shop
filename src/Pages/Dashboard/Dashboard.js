@@ -28,9 +28,16 @@ const Dashboard = () => {
   const { user, logOut } = useAuth();
   const [orders, setOrders] = useState([]);
 
+  const activeMenuStyles = {
+    color: "orange",
+    fontWeight: "bold",
+    fontSize: "18px",
+  };
+
   useEffect(() => {
     let isMounted = true;
-    fetch(`http://localhost:5000/api/v2/orders/user/${user._id}`)
+    const apiUrl = process.env.REACT_APP_API_URL;
+    fetch(`${apiUrl}/orders/user/${user._id}`)
       .then((res) => res.json())
       .then((data) => {
         if (isMounted) {
@@ -92,14 +99,7 @@ const Dashboard = () => {
                 </NavLink>
               </CDBSidebarMenuItem>
               <CDBSidebarMenuItem>
-                <NavLink
-                  to={`${url}/pay`}
-                  activeStyle={{
-                    color: "orange",
-                    fontWeight: "bold",
-                    fontSize: "18px",
-                  }}
-                >
+                <NavLink to={`${url}/pay`} activeStyle={activeMenuStyles}>
                   <i className="fas fa-money-check-alt m-1"></i>
                   Pay
                 </NavLink>
@@ -110,11 +110,7 @@ const Dashboard = () => {
                   <CDBSidebarMenuItem>
                     <NavLink
                       to={`${url}/admin-panel`}
-                      activeStyle={{
-                        color: "orange",
-                        fontWeight: "bold",
-                        fontSize: "18px",
-                      }}
+                      activeStyle={activeMenuStyles}
                     >
                       <i className="fas fa-user-plus m-1"></i>
                       Admin Panel
@@ -123,11 +119,7 @@ const Dashboard = () => {
                   <CDBSidebarMenuItem>
                     <NavLink
                       to={`${url}/addProduct`}
-                      activeStyle={{
-                        color: "orange",
-                        fontWeight: "bold",
-                        fontSize: "18px",
-                      }}
+                      activeStyle={activeMenuStyles}
                     >
                       <i className="fas fa-cart-plus m-1"></i>
                       Add Product
@@ -138,11 +130,7 @@ const Dashboard = () => {
                 <CDBSidebarMenuItem>
                   <NavLink
                     to={`${url}/makeReview`}
-                    activeStyle={{
-                      color: "orange",
-                      fontWeight: "bold",
-                      fontSize: "18px",
-                    }}
+                    activeStyle={activeMenuStyles}
                   >
                     <i className="far fa-comment-dots m-1"></i>
                     Review Product
