@@ -4,6 +4,7 @@ import { Alert, Button, Container, Form } from "react-bootstrap";
 const AddProduct = () => {
   const [productData, setProductData] = useState();
   const [success, setSuccess] = useState(false);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleOnBlur = (e) => {
     const field = e.target.name;
@@ -16,7 +17,7 @@ const AddProduct = () => {
 
   const handleProductSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:5000/api/v2/addProduct", {
+    fetch(`${apiUrl}/addProduct`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

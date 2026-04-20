@@ -10,7 +10,7 @@ import Homepage from "./Pages/Homepage/Homepage";
 import Login from "./Pages/Login/Login";
 import NotFound from "./Pages/NotFound/NotFound";
 import PrivateRoute from "./Pages/PrivateRoute/PrivateRoute";
-import ProductDetails from "./Pages/ProductDetails/BicycleDetails";
+import ProductDetails from "./Pages/ProductDetails/ProductDetails";
 import Register from "./Pages/Register/Register";
 import Success from "./Pages/Success/Success";
 

@@ -11,20 +11,18 @@ const RemoveProduct = ({
   const handleRemoveProductModalClose = () => setAdminModalShow(false);
   const handleRemoveProductModalShow = () => setAdminModalShow(true);
   const [selectedProductId, setSelectedProductId] = useState("");
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleRemoveProduct = async () => {
     if (!selectedProductId) return;
 
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/v2/products/${selectedProductId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+      const response = await fetch(`${apiUrl}/products/${selectedProductId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      );
+      });
       const data = await response.json();
       if (response.ok) {
         fetchProducts();

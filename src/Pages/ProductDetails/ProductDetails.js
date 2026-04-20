@@ -17,6 +17,7 @@ const ProductDetails = () => {
   const [product, setProduct] = useState({});
   const [modalShow, setModalShow] = useState(false);
   const [toastShow, setToastShow] = useState(false);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleClose = () => setModalShow(false);
   const handleShow = () => setModalShow(true);
@@ -24,7 +25,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     let isMounted = true;
-    fetch(`http://localhost:5000/api/v2/products/${id}`)
+    fetch(`${apiUrl}/products/${id}`)
       .then((res) => res.json())
       .then((data) => {
         if (isMounted) {

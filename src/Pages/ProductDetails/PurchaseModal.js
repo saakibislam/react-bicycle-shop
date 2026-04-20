@@ -2,6 +2,7 @@ import { Button, Form, Modal, Row } from "react-bootstrap";
 import useFirebase from "../hooks/useFirebase";
 
 const PurchaseModal = ({ product, show, handleClose, toggleToast }) => {
+  const apiUrl = process.env.REACT_APP_API_URL;
   const { user } = useFirebase();
 
   const handleOnSubmit = (e) => {
@@ -20,7 +21,7 @@ const PurchaseModal = ({ product, show, handleClose, toggleToast }) => {
       user: user?._id,
     };
 
-    fetch("http://localhost:5000/api/v2/orders", {
+    fetch(`${apiUrl}/orders`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

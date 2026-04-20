@@ -9,12 +9,11 @@ const AdminPanel = () => {
   const { user } = useAuth();
   const [toastShow, setToastShow] = useState(false);
   const [toastMessage, setToastMessage] = useState({});
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const fetchAdmins = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:5000/api/v2/users?role=admin",
-      );
+      const response = await fetch(`${apiUrl}/users?role=admin`);
       const data = await response.json();
       const otherAdmins = data.filter((admin) => admin._id !== user._id);
       setAdmins(otherAdmins);

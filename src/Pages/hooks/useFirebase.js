@@ -15,6 +15,7 @@ const useFirebase = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [authError, setAuthError] = useState("");
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const auth = getAuth();
   const googleProvider = new GoogleAuthProvider();
@@ -23,7 +24,7 @@ const useFirebase = () => {
   const registerUser = async (email, password, name, history) => {
     setIsLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/v2/users/register", {
+      const res = await fetch(`${apiUrl}/users/register`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -49,7 +50,7 @@ const useFirebase = () => {
   const loginUser = async (email, password, location, history) => {
     setIsLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/v2/users/login", {
+      const res = await fetch(`${apiUrl}/users/login`, {
         method: "POST",
         headers: {
           "content-type": "application/json",

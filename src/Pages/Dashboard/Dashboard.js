@@ -27,6 +27,7 @@ const Dashboard = () => {
   let { path, url } = useRouteMatch();
   const { user, logOut } = useAuth();
   const [orders, setOrders] = useState([]);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const activeMenuStyles = {
     color: "orange",
@@ -36,7 +37,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     let isMounted = true;
-    const apiUrl = process.env.REACT_APP_API_URL;
     fetch(`${apiUrl}/orders/user/${user._id}`)
       .then((res) => res.json())
       .then((data) => {

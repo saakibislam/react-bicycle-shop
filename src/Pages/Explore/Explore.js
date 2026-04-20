@@ -7,9 +7,10 @@ import ProductCard from "./ProductCard";
 
 const Explore = () => {
   const [products, setProducts] = useState();
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/v2/products")
+    fetch(`${apiUrl}/products`)
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((error) => console.log(error));

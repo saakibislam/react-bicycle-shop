@@ -7,10 +7,11 @@ const ProductsDashboard = () => {
   const [products, setProducts] = useState([]);
   const [toastShow, setToastShow] = useState(false);
   const [toastMessage, setToastMessage] = useState({});
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/v2/products");
+      const response = await fetch(`${apiUrl}/products`);
       const data = await response.json();
       setProducts(data);
     } catch (error) {

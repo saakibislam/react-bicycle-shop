@@ -4,8 +4,9 @@ import Loading from "../Shared/Loading/Loading";
 
 const Feedback = () => {
   const [reviews, setReviews] = useState([]);
+  const apiUrl = process.env.REACT_APP_API_URL;
   useEffect(() => {
-    fetch("http://localhost:5000/api/v2/reviews")
+    fetch(`${apiUrl}/reviews`)
       .then((res) => res.json())
       .then((data) => {
         if (data.length > 4) {

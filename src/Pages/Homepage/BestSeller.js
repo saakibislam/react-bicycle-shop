@@ -5,9 +5,10 @@ import BestSellerCard from "./BestSellerCard";
 
 const BestSeller = () => {
   const [products, setProducts] = useState();
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/v2/products")
+    fetch(`${apiUrl}/products`)
       .then((res) => res.json())
       .then((data) => setProducts(data.slice(0, 4)))
       .catch((error) => console.log(error));

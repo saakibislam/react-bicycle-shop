@@ -12,11 +12,12 @@ const NewAdminModal = ({
   const [adminModalShow, setAdminModalShow] = useState(false);
   const handleAdminModalClose = () => setAdminModalShow(false);
   const handleAdminModalShow = () => setAdminModalShow(true);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleAdminSubmit = async () => {
     // Promotes a user to admin and updates the UI based on the API response.
     try {
-      const response = await fetch("http://localhost:5000/api/v2/users/admin", {
+      const response = await fetch(`${apiUrl}/users/admin`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

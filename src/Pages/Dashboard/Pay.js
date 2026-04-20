@@ -23,6 +23,7 @@ import {
 const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
 
 const CheckoutForm = ({ order, onSuccess }) => {
+  const apiUrl = process.env.REACT_APP_API_URL;
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
@@ -53,16 +54,13 @@ const CheckoutForm = ({ order, onSuccess }) => {
     } else {
       // Update order status in the backend
       try {
-        const response = await fetch(
-          `http://localhost:5000/api/v2/orders/${order._id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ ...order, status: "Confirmed" }),
+        const response = await fetch(`${apiUrl}/orders/${order._id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
           },
-        );
+          body: JSON.stringify({ ...order, status: "Confirmed" }),
+        });
 
         if (response.ok) {
           setError(null);

@@ -10,20 +10,18 @@ const AdminTable = ({
 }) => {
   const removeAdmin = async (adminId) => {
     try {
-      const response = await fetch(
-        "http://localhost:5000/api/v2/users/admin/",
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify({
-            adminId,
-            role: "user",
-          }),
+      const apiUrl = process.env.REACT_APP_API_URL;
+      const response = await fetch(`${apiUrl}/users/admin/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      );
+        body: JSON.stringify({
+          adminId,
+          role: "user",
+        }),
+      });
       const data = await response.json();
       if (data.user) {
         setToastMessage({

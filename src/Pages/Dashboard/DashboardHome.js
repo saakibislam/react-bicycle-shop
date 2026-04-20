@@ -1,13 +1,14 @@
 import { Button, Container } from "react-bootstrap";
 
 const DashboardHome = ({ orders, setOrders }) => {
+  const apiUrl = process.env.REACT_APP_API_URL;
   // Cancel Order
   const handleOrderCancel = (orderId) => {
     const confirmationForDelete = window.confirm(
       "Are you sure you want to cancel this order?",
     );
     if (confirmationForDelete) {
-      fetch(`http://localhost:5000/api/v2/orders/${orderId}`, {
+      fetch(`${apiUrl}/orders/${orderId}`, {
         method: "DELETE",
       })
         .then((res) => {

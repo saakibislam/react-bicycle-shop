@@ -6,6 +6,7 @@ const MakeReview = ({ orders }) => {
   const { user } = useAuth();
   const [reviewData, setReviewData] = useState();
   const [success, setSuccess] = useState(false);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleOnBlur = (e) => {
     const newReviewData = {
@@ -19,7 +20,7 @@ const MakeReview = ({ orders }) => {
 
   const handleReviewSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:5000/api/v2/reviews", {
+    fetch(`${apiUrl}/reviews`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
