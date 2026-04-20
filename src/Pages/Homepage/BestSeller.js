@@ -1,6 +1,6 @@
 import { Container, Row } from "react-bootstrap";
-import { useApi } from "../api";
-import Loading from "../Shared/Loading/Loading";
+import Loading from "../../components/Shared/Loading/Loading";
+import { useApi } from "../../hooks/api";
 import BestSellerCard from "./BestSellerCard";
 
 const BestSeller = () => {

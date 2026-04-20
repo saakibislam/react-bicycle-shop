@@ -1,5 +1,5 @@
 import { Button, Card, Table } from "react-bootstrap";
-import { patchApi } from "../../api";
+import { patchApi } from "../../../hooks/api";
 
 const AdminTable = ({ admins, setAdmins, setToastMessage, setToastShow }) => {
   const removeAdmin = async (adminId) => {

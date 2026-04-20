@@ -17,7 +17,7 @@ import {
   Row,
   Spinner,
 } from "react-bootstrap";
-import { putApi } from "../api";
+import { putApi } from "../../hooks/api";
 
 // Replace with your own Stripe Publishable Key.
 // This is a standard Stripe test key for demo purposes.

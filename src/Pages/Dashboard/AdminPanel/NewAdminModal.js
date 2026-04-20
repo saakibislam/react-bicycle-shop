@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { patchApi } from "../../api";
+import { patchApi } from "../../../hooks/api";
 
 const NewAdminModal = ({ setAdmins, setToastMessage, setToastShow }) => {
   const [email, setEmail] = useState();

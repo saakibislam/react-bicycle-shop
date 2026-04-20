@@ -6,7 +6,7 @@ import {
 } from "firebase/auth";
 import { useState } from "react";
 import { initializeAuthentication } from "../firebase/firebase.init";
-import { postApi } from "../api";
+import { postApi } from "./api";
 
 const useFirebase = () => {
   initializeAuthentication();

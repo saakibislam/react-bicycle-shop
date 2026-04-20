@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Alert, Container, Form, Row, Toast } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
-import Footer from "../Shared/Footer/Footer";
-import Loading from "../Shared/Loading/Loading";
-import Navigation from "../Shared/Navigation/Navigation";
+import Footer from "../../components/Shared/Footer/Footer";
+import Loading from "../../components/Shared/Loading/Loading";
+import Navigation from "../../components/Shared/Navigation/Navigation";
+import useAuth from "../../hooks/useAuth";
 
 const Register = () => {
   const [registerData, setRegisterData] = useState({});

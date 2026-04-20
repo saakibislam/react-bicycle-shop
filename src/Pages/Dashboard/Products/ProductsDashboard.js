@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useApi } from "../../api";
-import Loading from "../../Shared/Loading/Loading";
-import Toaster from "../../Shared/Toaster/Toaster";
+import Loading from "../../../components/Shared/Loading/Loading";
+import Toaster from "../../../components/Shared/Toaster/Toaster";
+import { useApi } from "../../../hooks/api";
 import AddProduct from "./AddProduct";
 import RemoveProduct from "./RemoveProduct";
 

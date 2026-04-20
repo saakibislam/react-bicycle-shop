@@ -1,5 +1,5 @@
 import { Button, Container } from "react-bootstrap";
-import { deleteApi } from "../api";
+import { deleteApi } from "../../hooks/api";
 
 const DashboardHome = ({ orders, setOrders }) => {
   // Cancel Order

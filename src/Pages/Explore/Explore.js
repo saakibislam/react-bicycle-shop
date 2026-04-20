@@ -1,8 +1,8 @@
 import { Col, Container, Row } from "react-bootstrap";
-import { useApi } from "../api";
-import Footer from "../Shared/Footer/Footer";
-import Loading from "../Shared/Loading/Loading";
-import Navigation from "../Shared/Navigation/Navigation";
+import Footer from "../../components/Shared/Footer/Footer";
+import Loading from "../../components/Shared/Loading/Loading";
+import Navigation from "../../components/Shared/Navigation/Navigation";
+import { useApi } from "../../hooks/api";
 import ProductCard from "./ProductCard";
 
 const Explore = () => {

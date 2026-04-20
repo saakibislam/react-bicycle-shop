@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useApi } from "../../api";
-import useAuth from "../../hooks/useAuth";
-import Loading from "../../Shared/Loading/Loading";
-import Toaster from "../../Shared/Toaster/Toaster";
+import Loading from "../../../components/Shared/Loading/Loading";
+import Toaster from "../../../components/Shared/Toaster/Toaster";
+import { useApi } from "../../../hooks/api";
+import useAuth from "../../../hooks/useAuth";
 import AdminTable from "./AdminTable";
 import NewAdminModal from "./NewAdminModal";
 

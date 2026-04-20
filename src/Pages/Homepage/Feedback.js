@@ -1,6 +1,6 @@
 import { Carousel, Container } from "react-bootstrap";
-import Loading from "../Shared/Loading/Loading";
-import { useApi } from "../api";
+import Loading from "../../components/Shared/Loading/Loading";
+import { useApi } from "../../hooks/api";
 
 const Feedback = () => {
   const { data: reviews, loading, error } = useApi("/reviews");

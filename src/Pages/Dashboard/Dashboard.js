@@ -15,9 +15,9 @@ import {
   Switch,
   useRouteMatch,
 } from "react-router-dom";
-import { useApi } from "../api";
-import useAuth from "../hooks/useAuth";
-import Loading from "../Shared/Loading/Loading";
+import Loading from "../../components/Shared/Loading/Loading";
+import { useApi } from "../../hooks/api";
+import useAuth from "../../hooks/useAuth";
 import AdminPanel from "./AdminPanel/AdminPanel";
 import DashboardHome from "./DashboardHome";
 import MakeReview from "./MakeReview";

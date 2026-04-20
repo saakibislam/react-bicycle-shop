@@ -8,10 +8,10 @@ import {
   ToastContainer,
 } from "react-bootstrap";
 import { useParams } from "react-router";
-import { useApi } from "../api";
-import Footer from "../Shared/Footer/Footer";
-import Loading from "../Shared/Loading/Loading";
-import Navigation from "../Shared/Navigation/Navigation";
+import Footer from "../../components/Shared/Footer/Footer";
+import Loading from "../../components/Shared/Loading/Loading";
+import Navigation from "../../components/Shared/Navigation/Navigation";
+import { useApi } from "../../hooks/api";
 import PurchaseModal from "./PurchaseModal";
 
 const ProductDetails = () => {

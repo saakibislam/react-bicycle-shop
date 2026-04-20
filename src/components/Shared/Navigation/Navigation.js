@@ -1,6 +1,6 @@
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../../../hooks/useAuth";
 
 const Navigation = () => {
   const { user, logOut } = useAuth();

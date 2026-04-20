@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Alert, Button, Container, Form } from "react-bootstrap";
-import { postApi } from "../../api";
+import { postApi } from "../../../hooks/api";
 
 const AddProduct = () => {
   const [productData, setProductData] = useState();

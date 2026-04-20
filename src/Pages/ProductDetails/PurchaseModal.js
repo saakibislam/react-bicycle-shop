@@ -1,6 +1,6 @@
 import { Button, Form, Modal, Row } from "react-bootstrap";
-import useFirebase from "../hooks/useFirebase";
-import { postApi } from "../api";
+import { postApi } from "../../hooks/api";
+import useFirebase from "../../hooks/useFirebase";
 
 const PurchaseModal = ({ product, show, handleClose, toggleToast }) => {
   const { user } = useFirebase();

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
-import { postApi } from "../api";
-import useAuth from "../hooks/useAuth";
+import { postApi } from "../../hooks/api";
+import useAuth from "../../hooks/useAuth";
 
 const MakeReview = ({ orders }) => {
   const { user } = useAuth();

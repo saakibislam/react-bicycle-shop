@@ -1,18 +1,18 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import "./App.css";
-import About from "./Pages/About/About";
-import AuthProvider from "./Pages/AuthProvider/AuthProvider";
-import Contact from "./Pages/Contact/Contact";
-import Dashboard from "./Pages/Dashboard/Dashboard";
-import Explore from "./Pages/Explore/Explore";
-import Homepage from "./Pages/Homepage/Homepage";
-import Login from "./Pages/Login/Login";
-import NotFound from "./Pages/NotFound/NotFound";
-import PrivateRoute from "./Pages/PrivateRoute/PrivateRoute";
-import ProductDetails from "./Pages/ProductDetails/ProductDetails";
-import Register from "./Pages/Register/Register";
-import Success from "./Pages/Success/Success";
+import AuthProvider from "./components/AuthProvider/AuthProvider";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import About from "./pages/About/About";
+import Contact from "./pages/Contact/Contact";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Explore from "./pages/Explore/Explore";
+import Homepage from "./pages/Homepage/Homepage";
+import Login from "./pages/Login/Login";
+import NotFound from "./pages/NotFound/NotFound";
+import ProductDetails from "./pages/ProductDetails/ProductDetails";
+import Register from "./pages/Register/Register";
+import Success from "./pages/Success/Success";
 
 function App() {
   return (
