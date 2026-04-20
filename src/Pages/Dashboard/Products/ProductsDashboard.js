@@ -1,34 +1,28 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useApi } from "../../api";
+import Loading from "../../Shared/Loading/Loading";
 import Toaster from "../../Shared/Toaster/Toaster";
 import AddProduct from "./AddProduct";
 import RemoveProduct from "./RemoveProduct";
 
 const ProductsDashboard = () => {
-  const [products, setProducts] = useState([]);
+  const {
+    data: products,
+    loading,
+    error,
+    setData: setProducts,
+  } = useApi("/products");
   const [toastShow, setToastShow] = useState(false);
   const [toastMessage, setToastMessage] = useState({});
-  const apiUrl = process.env.REACT_APP_API_URL;
 
-  const fetchProducts = async () => {
-    try {
-      const response = await fetch(`${apiUrl}/products`);
-      const data = await response.json();
-      setProducts(data);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
-  };
+  if (loading) return <Loading />;
+  if (error) return <p>Error: {error.message}</p>;
 
-  useEffect(() => {
-    fetchProducts();
-
-    return () => {};
-  }, []);
   return (
     <>
       <RemoveProduct
-        fetchProducts={fetchProducts}
         products={products}
+        setProducts={setProducts}
         setToastMessage={setToastMessage}
         setToastShow={setToastShow}
       />

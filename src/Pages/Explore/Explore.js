@@ -1,22 +1,15 @@
-import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import { useApi } from "../api";
 import Footer from "../Shared/Footer/Footer";
 import Loading from "../Shared/Loading/Loading";
 import Navigation from "../Shared/Navigation/Navigation";
 import ProductCard from "./ProductCard";
 
 const Explore = () => {
-  const [products, setProducts] = useState();
-  const apiUrl = process.env.REACT_APP_API_URL;
+  const { data: products, loading, error } = useApi("/products");
 
-  useEffect(() => {
-    fetch(`${apiUrl}/products`)
-      .then((res) => res.json())
-      .then((data) => setProducts(data))
-      .catch((error) => console.log(error));
-  }, []);
-
-  if (!products) return <Loading></Loading>;
+  if (loading) return <Loading></Loading>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div>

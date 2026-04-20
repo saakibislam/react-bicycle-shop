@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Col,
@@ -8,35 +8,25 @@ import {
   ToastContainer,
 } from "react-bootstrap";
 import { useParams } from "react-router";
+import { useApi } from "../api";
 import Footer from "../Shared/Footer/Footer";
+import Loading from "../Shared/Loading/Loading";
 import Navigation from "../Shared/Navigation/Navigation";
 import PurchaseModal from "./PurchaseModal";
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState({});
+  const { data: product, loading, error } = useApi(`/products/${id}`);
   const [modalShow, setModalShow] = useState(false);
   const [toastShow, setToastShow] = useState(false);
-  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleClose = () => setModalShow(false);
   const handleShow = () => setModalShow(true);
   const toggleToast = () => setToastShow(!toastShow);
 
-  useEffect(() => {
-    let isMounted = true;
-    fetch(`${apiUrl}/products/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (isMounted) {
-          setProduct(data);
-        }
-      })
-      .catch((error) => console.log(error));
-    return () => {
-      isMounted = false;
-    };
-  }, [id]);
+  if (loading) return <Loading />;
+  if (error) return <p>Error: {error.message}</p>;
+  if (!product) return <p>Product not found</p>;
 
   return (
     <div>

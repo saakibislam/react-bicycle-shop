@@ -1,9 +1,9 @@
-import { CDBContainer, CDBSpinner } from "cdbreact";
 import { useEffect, useState } from "react";
 import { Alert, Container, Form, Row, Toast } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import Footer from "../Shared/Footer/Footer";
+import Loading from "../Shared/Loading/Loading";
 import Navigation from "../Shared/Navigation/Navigation";
 
 const Register = () => {
@@ -54,6 +54,7 @@ const Register = () => {
   return (
     <div>
       <Navigation></Navigation>
+      {isLoading && <Loading />}
       <Container>
         <Toast
           bg="success"
@@ -139,11 +140,6 @@ const Register = () => {
                 Sign up
               </button>
             </form>
-          )}
-          {isLoading && (
-            <CDBContainer>
-              <CDBSpinner danger size="big" />
-            </CDBContainer>
           )}
         </Row>
       </Container>

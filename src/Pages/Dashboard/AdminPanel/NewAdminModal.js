@@ -1,31 +1,17 @@
 import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
+import { patchApi } from "../../api";
 
-const NewAdminModal = ({
-  fetchAdmins,
-  toastShow,
-  setToastShow,
-  toastMessage,
-  setToastMessage,
-}) => {
+const NewAdminModal = ({ setAdmins, setToastMessage, setToastShow }) => {
   const [email, setEmail] = useState();
   const [adminModalShow, setAdminModalShow] = useState(false);
   const handleAdminModalClose = () => setAdminModalShow(false);
   const handleAdminModalShow = () => setAdminModalShow(true);
-  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleAdminSubmit = async () => {
     // Promotes a user to admin and updates the UI based on the API response.
     try {
-      const response = await fetch(`${apiUrl}/users/admin`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({ email, role: "admin" }),
-      });
-      const data = await response.json();
+      const data = await patchApi("/users/admin", { email, role: "admin" });
 
       if (!data.user) {
         setToastMessage({
@@ -37,7 +23,7 @@ const NewAdminModal = ({
       }
 
       handleAdminModalClose();
-      fetchAdmins();
+      setAdmins((prevAdmins) => [...prevAdmins, data.user]);
       setToastMessage({
         variant: "success",
         message: data.message || "Admin added successfully",

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Alert, Button, Container, Form } from "react-bootstrap";
+import { postApi } from "../../api";
 
 const AddProduct = () => {
   const [productData, setProductData] = useState();
   const [success, setSuccess] = useState(false);
-  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleOnBlur = (e) => {
     const field = e.target.name;
@@ -15,21 +15,16 @@ const AddProduct = () => {
     setProductData(newProductData);
   };
 
-  const handleProductSubmit = (e) => {
+  const handleProductSubmit = async (e) => {
     e.preventDefault();
-    fetch(`${apiUrl}/addProduct`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(productData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.insertedId) {
-          setSuccess(true);
-        }
-      });
+    try {
+      const data = await postApi("/addProduct", productData);
+      if (data.insertedId) {
+        setSuccess(true);
+      }
+    } catch (error) {
+      console.error("Error adding product: ", error);
+    }
   };
   return (
     <Container className="w-75 mx-auto px-5 py-2 shadow">

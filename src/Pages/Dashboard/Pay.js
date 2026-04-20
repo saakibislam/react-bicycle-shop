@@ -17,13 +17,13 @@ import {
   Row,
   Spinner,
 } from "react-bootstrap";
+import { putApi } from "../api";
 
 // Replace with your own Stripe Publishable Key.
 // This is a standard Stripe test key for demo purposes.
 const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
 
 const CheckoutForm = ({ order, onSuccess }) => {
-  const apiUrl = process.env.REACT_APP_API_URL;
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
@@ -54,25 +54,12 @@ const CheckoutForm = ({ order, onSuccess }) => {
     } else {
       // Update order status in the backend
       try {
-        const response = await fetch(`${apiUrl}/orders/${order._id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ ...order, status: "Confirmed" }),
-        });
-
-        if (response.ok) {
-          setError(null);
-          setSuccess(true);
-          setProcessing(false);
-          console.log("[PaymentMethod created]", paymentMethod);
-          if (onSuccess) onSuccess(order._id);
-        } else {
-          throw new Error(
-            "Payment succeeded, but failed to update order status.",
-          );
-        }
+        await putApi(`/orders/${order._id}`, { ...order, status: "Confirmed" });
+        setError(null);
+        setSuccess(true);
+        setProcessing(false);
+        console.log("[PaymentMethod created]", paymentMethod);
+        if (onSuccess) onSuccess(order._id);
       } catch (err) {
         setError(err.message);
         setSuccess(false);
@@ -80,6 +67,7 @@ const CheckoutForm = ({ order, onSuccess }) => {
       }
     }
   };
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <Form onSubmit={handleSubmit}>

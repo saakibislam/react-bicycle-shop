@@ -7,7 +7,6 @@ import {
   CDBSidebarMenu,
   CDBSidebarMenuItem,
 } from "cdbreact";
-import { useEffect, useState } from "react";
 import { Badge, Button } from "react-bootstrap";
 import {
   NavLink,
@@ -16,7 +15,9 @@ import {
   Switch,
   useRouteMatch,
 } from "react-router-dom";
+import { useApi } from "../api";
 import useAuth from "../hooks/useAuth";
+import Loading from "../Shared/Loading/Loading";
 import AdminPanel from "./AdminPanel/AdminPanel";
 import DashboardHome from "./DashboardHome";
 import MakeReview from "./MakeReview";
@@ -26,8 +27,12 @@ import ProductsDashboard from "./Products/ProductsDashboard";
 const Dashboard = () => {
   let { path, url } = useRouteMatch();
   const { user, logOut } = useAuth();
-  const [orders, setOrders] = useState([]);
-  const apiUrl = process.env.REACT_APP_API_URL;
+  const {
+    data: orders,
+    loading,
+    error,
+    setData: setOrders,
+  } = useApi(`/orders/user/${user._id}`);
 
   const activeMenuStyles = {
     color: "orange",
@@ -35,18 +40,9 @@ const Dashboard = () => {
     fontSize: "18px",
   };
 
-  useEffect(() => {
-    let isMounted = true;
-    fetch(`${apiUrl}/orders/user/${user._id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (isMounted) {
-          setOrders(data);
-        }
-      })
-      .catch((error) => console.log(error));
-    return () => (isMounted = false);
-  }, [user]);
+  if (loading) return <Loading />;
+  if (error) return <p>Error: {error.message}</p>;
+
   return (
     <div style={{ display: "flex", height: "100vh" }}>
       {/* Sidebar  */}

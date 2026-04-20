@@ -6,6 +6,7 @@ import {
 } from "firebase/auth";
 import { useState } from "react";
 import { initializeAuthentication } from "../firebase/firebase.init";
+import { postApi } from "../api";
 
 const useFirebase = () => {
   initializeAuthentication();
@@ -15,7 +16,6 @@ const useFirebase = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [authError, setAuthError] = useState("");
-  const apiUrl = process.env.REACT_APP_API_URL;
 
   const auth = getAuth();
   const googleProvider = new GoogleAuthProvider();
@@ -24,14 +24,7 @@ const useFirebase = () => {
   const registerUser = async (email, password, name, history) => {
     setIsLoading(true);
     try {
-      const res = await fetch(`${apiUrl}/users/register`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({ email, password, name }),
-      });
-      const data = await res.json();
+      const data = await postApi("/users/register", { email, password, name });
       if (data.message !== "User registered successfully") {
         setAuthError(data.message);
         throw new Error(data.message);
@@ -50,14 +43,7 @@ const useFirebase = () => {
   const loginUser = async (email, password, location, history) => {
     setIsLoading(true);
     try {
-      const res = await fetch(`${apiUrl}/users/login`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
+      const data = await postApi("/users/login", { email, password });
 
       if (data.message) {
         setAuthError(data.message);

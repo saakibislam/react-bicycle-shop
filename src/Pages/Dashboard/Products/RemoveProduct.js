@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
+import { deleteApi } from "../../api";
 
 const RemoveProduct = ({
-  fetchProducts,
   products,
+  setProducts,
   setToastMessage,
   setToastShow,
 }) => {
@@ -11,29 +12,20 @@ const RemoveProduct = ({
   const handleRemoveProductModalClose = () => setAdminModalShow(false);
   const handleRemoveProductModalShow = () => setAdminModalShow(true);
   const [selectedProductId, setSelectedProductId] = useState("");
-  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleRemoveProduct = async () => {
     if (!selectedProductId) return;
 
     try {
-      const response = await fetch(`${apiUrl}/products/${selectedProductId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+      const data = await deleteApi(`/products/${selectedProductId}`);
+      setProducts(products.filter((p) => p._id !== selectedProductId));
+      handleRemoveProductModalClose();
+      setSelectedProductId("");
+      setToastMessage({
+        variant: "danger",
+        message: data.message,
       });
-      const data = await response.json();
-      if (response.ok) {
-        fetchProducts();
-        handleRemoveProductModalClose();
-        setSelectedProductId("");
-        setToastMessage({
-          variant: "danger",
-          message: data.message,
-        });
-        setToastShow(true);
-      }
+      setToastShow(true);
     } catch (error) {
       console.error("Error removing product:", error);
     }

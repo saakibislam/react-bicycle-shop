@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
+import { postApi } from "../api";
 import useAuth from "../hooks/useAuth";
 
 const MakeReview = ({ orders }) => {
   const { user } = useAuth();
   const [reviewData, setReviewData] = useState();
   const [success, setSuccess] = useState(false);
-  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleOnBlur = (e) => {
     const newReviewData = {
@@ -18,21 +18,16 @@ const MakeReview = ({ orders }) => {
     e.target.value = "";
   };
 
-  const handleReviewSubmit = (e) => {
+  const handleReviewSubmit = async (e) => {
     e.preventDefault();
-    fetch(`${apiUrl}/reviews`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(reviewData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.insertedId) {
-          setSuccess(true);
-        }
-      });
+    try {
+      const data = await postApi("/reviews", reviewData);
+      if (data.insertedId) {
+        setSuccess(true);
+      }
+    } catch (error) {
+      console.error("Error submitting review: ", error);
+    }
   };
 
   return (

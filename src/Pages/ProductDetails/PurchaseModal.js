@@ -1,11 +1,11 @@
 import { Button, Form, Modal, Row } from "react-bootstrap";
 import useFirebase from "../hooks/useFirebase";
+import { postApi } from "../api";
 
 const PurchaseModal = ({ product, show, handleClose, toggleToast }) => {
-  const apiUrl = process.env.REACT_APP_API_URL;
   const { user } = useFirebase();
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
     const form = e.target.elements;
 
@@ -21,24 +21,13 @@ const PurchaseModal = ({ product, show, handleClose, toggleToast }) => {
       user: user?._id,
     };
 
-    fetch(`${apiUrl}/orders`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(order),
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to place order");
-        return res.json();
-      })
-      .then(() => {
-        handleClose();
-        toggleToast();
-      })
-      .catch((error) => {
-        console.error("Error submitting order: ", error);
-      });
+    try {
+      await postApi("/orders", order);
+      handleClose();
+      toggleToast();
+    } catch (error) {
+      console.error("Error submitting order: ", error);
+    }
   };
 
   return (

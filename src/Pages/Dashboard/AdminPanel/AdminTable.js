@@ -1,35 +1,20 @@
 import { Button, Card, Table } from "react-bootstrap";
+import { patchApi } from "../../api";
 
-const AdminTable = ({
-  admins,
-  fetchAdmins,
-  toastShow,
-  setToastShow,
-  toastMessage,
-  setToastMessage,
-}) => {
+const AdminTable = ({ admins, setAdmins, setToastMessage, setToastShow }) => {
   const removeAdmin = async (adminId) => {
     try {
-      const apiUrl = process.env.REACT_APP_API_URL;
-      const response = await fetch(`${apiUrl}/users/admin/`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({
-          adminId,
-          role: "user",
-        }),
+      const data = await patchApi("/users/admin", {
+        adminId,
+        role: "user",
       });
-      const data = await response.json();
       if (data.user) {
         setToastMessage({
           variant: "danger",
           message: data.message || "Admin removed successfully",
         });
         setToastShow(true);
-        fetchAdmins();
+        setAdmins(admins.filter((admin) => admin._id !== adminId));
       }
     } catch (error) {
       console.error("Error removing admin:", error);

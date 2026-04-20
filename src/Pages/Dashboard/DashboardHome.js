@@ -1,25 +1,20 @@
 import { Button, Container } from "react-bootstrap";
+import { deleteApi } from "../api";
 
 const DashboardHome = ({ orders, setOrders }) => {
-  const apiUrl = process.env.REACT_APP_API_URL;
   // Cancel Order
-  const handleOrderCancel = (orderId) => {
+  const handleOrderCancel = async (orderId) => {
     const confirmationForDelete = window.confirm(
       "Are you sure you want to cancel this order?",
     );
     if (confirmationForDelete) {
-      fetch(`${apiUrl}/orders/${orderId}`, {
-        method: "DELETE",
-      })
-        .then((res) => {
-          if (res.ok) {
-            const remainingOrders = orders.filter(
-              (order) => order._id !== orderId,
-            );
-            setOrders(remainingOrders);
-          }
-        })
-        .catch((error) => console.error("Error cancelling order:", error));
+      try {
+        await deleteApi(`/orders/${orderId}`);
+        const remainingOrders = orders.filter((order) => order._id !== orderId);
+        setOrders(remainingOrders);
+      } catch (error) {
+        console.error("Error cancelling order:", error);
+      }
     }
   };
 
