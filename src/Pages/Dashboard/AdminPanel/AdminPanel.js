@@ -13,6 +13,7 @@ const AdminPanel = () => {
     loading,
     error,
     setData: setAdmins,
+    refetch,
   } = useApi("/users?role=admin");
   const [toastShow, setToastShow] = useState(false);
   const [toastMessage, setToastMessage] = useState({});
@@ -26,7 +27,7 @@ const AdminPanel = () => {
     <div>
       {otherAdmins?.length ? <h3>Admin Panel</h3> : <h3>No Admins Found</h3>}
       <NewAdminModal
-        setAdmins={setAdmins}
+        refetch={refetch}
         setToastMessage={setToastMessage}
         setToastShow={setToastShow}
       />

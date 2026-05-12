@@ -43,21 +43,14 @@ const useFirebase = () => {
   const loginUser = async (email, password, location, history) => {
     setIsLoading(true);
     try {
-      const data = await postApi("/users/login", { email, password });
-
-      if (data.message) {
-        setAuthError(data.message);
-        throw new Error(data.message);
-      } else if (data.user) {
-        setUser(data.user);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        setAuthError("");
-        const destination = location?.state?.from || "/";
-        history.push(destination);
-        // Generating Token
-        // getToken(email);
-        return data.user;
-      }
+      const result = await postApi("/users/login", { email, password });
+      const user = result.data;
+      setUser(user);
+      localStorage.setItem("user", JSON.stringify(user));
+      setAuthError("");
+      const destination = location?.state?.from || "/";
+      history.push(destination);
+      return user;
     } catch (error) {
       setAuthError(error.message);
       throw error;

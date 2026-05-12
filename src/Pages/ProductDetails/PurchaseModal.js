@@ -17,7 +17,7 @@ const PurchaseModal = ({ product, show, handleClose, toggleToast }) => {
       zip: form.zip.value,
       country: form.country.value,
       phone: form.phone.value,
-      price: product?.price,
+      totalPrice: product?.price,
       user: user?._id,
     };
 

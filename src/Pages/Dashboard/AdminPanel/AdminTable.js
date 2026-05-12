@@ -2,19 +2,19 @@ import { Button, Card, Table } from "react-bootstrap";
 import { patchApi } from "../../../hooks/api";
 
 const AdminTable = ({ admins, setAdmins, setToastMessage, setToastShow }) => {
-  const removeAdmin = async (adminId) => {
+  const removeAdmin = async (email) => {
     try {
-      const data = await patchApi("/users/admin", {
-        adminId,
+      const result = await patchApi("/users/admin", {
+        email,
         role: "user",
       });
-      if (data.user) {
+      if (result.data) {
         setToastMessage({
           variant: "danger",
-          message: data.message || "Admin removed successfully",
+          message: result.message || "Admin removed successfully",
         });
         setToastShow(true);
-        setAdmins(admins.filter((admin) => admin._id !== adminId));
+        setAdmins(admins.filter((admin) => admin.email !== email));
       }
     } catch (error) {
       console.error("Error removing admin:", error);
@@ -43,7 +43,7 @@ const AdminTable = ({ admins, setAdmins, setToastMessage, setToastShow }) => {
                 <Button
                   variant="danger"
                   size="sm"
-                  onClick={() => removeAdmin(admin._id)}
+                  onClick={() => removeAdmin(admin.email)}
                 >
                   Remove
                 </Button>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { patchApi } from "../../../hooks/api";
 
-const NewAdminModal = ({ setAdmins, setToastMessage, setToastShow }) => {
+const NewAdminModal = ({ refetch, setToastMessage, setToastShow }) => {
   const [email, setEmail] = useState();
   const [adminModalShow, setAdminModalShow] = useState(false);
   const handleAdminModalClose = () => setAdminModalShow(false);
@@ -11,27 +11,18 @@ const NewAdminModal = ({ setAdmins, setToastMessage, setToastShow }) => {
   const handleAdminSubmit = async () => {
     // Promotes a user to admin and updates the UI based on the API response.
     try {
-      const data = await patchApi("/users/admin", { email, role: "admin" });
-
-      if (!data.user) {
-        setToastMessage({
-          variant: "danger",
-          message: data.message || "Failed to add admin",
-        });
-        setToastShow(true);
-        return;
-      }
-
+      const result = await patchApi("/users/admin", { email, role: "admin" });
       handleAdminModalClose();
-      setAdmins((prevAdmins) => [...prevAdmins, data.user]);
-      setToastMessage({
-        variant: "success",
-        message: data.message || "Admin added successfully",
-      });
+      setToastMessage({ variant: "success", message: result.message });
       setToastShow(true);
       setEmail("");
+      refetch();
     } catch (error) {
-      console.error("Failed to add new admin:", error);
+      setToastMessage({
+        variant: "danger",
+        message: error.message || "Failed to add admin",
+      });
+      setToastShow(true);
     }
   };
 

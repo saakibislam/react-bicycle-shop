@@ -32,7 +32,7 @@ const Dashboard = () => {
     loading,
     error,
     setData: setOrders,
-  } = useApi(`/orders/user/${user._id}`);
+  } = useApi(`/orders/my-orders/${user._id}`);
 
   const activeMenuStyles = {
     color: "orange",

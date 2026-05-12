@@ -4,8 +4,10 @@ export const apiUrl = process.env.REACT_APP_API_URL;
 
 export const useApi = (endpoint) => {
   const [data, setData] = useState(null);
+  const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [fetchCount, setFetchCount] = useState(0);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -18,7 +20,12 @@ export const useApi = (endpoint) => {
         const response = await fetch(`${apiUrl}${endpoint}`, { signal });
         const result = await response.json();
         if (isMounted) {
-          setData(result);
+          if (result.success) {
+            setData(result.data);
+            setMessage(result.message);
+          } else {
+            setError(new Error(result.message));
+          }
         }
       } catch (error) {
         if (isMounted && error.name !== "AbortError") {
@@ -37,9 +44,11 @@ export const useApi = (endpoint) => {
       isMounted = false;
       controller.abort();
     };
-  }, [endpoint]);
+  }, [endpoint, fetchCount]);
 
-  return { data, loading, error, setData };
+  const refetch = () => setFetchCount((c) => c + 1);
+
+  return { data, message, loading, error, setData, refetch };
 };
 
 export const postApi = async (endpoint, body) => {
@@ -50,10 +59,11 @@ export const postApi = async (endpoint, body) => {
     },
     body: JSON.stringify(body),
   });
-  if (!response.ok) {
-    throw new Error("Failed to post data");
+  const result = await response.json();
+  if (!result.success) {
+    throw new Error(result.message || "Failed to post data");
   }
-  return response.json();
+  return result;
 };
 
 export const putApi = async (endpoint, body) => {
@@ -64,23 +74,22 @@ export const putApi = async (endpoint, body) => {
     },
     body: JSON.stringify(body),
   });
-  if (!response.ok) {
-    throw new Error("Failed to put data");
+  const result = await response.json();
+  if (!result.success) {
+    throw new Error(result.message || "Failed to put data");
   }
-  return response.json();
+  return result;
 };
 
 export const deleteApi = async (endpoint) => {
   const response = await fetch(`${apiUrl}${endpoint}`, {
     method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
   });
-  if (!response.ok) {
-    throw new Error("Failed to delete data");
+  const result = await response.json();
+  if (!result.success) {
+    throw new Error(result.message || "Failed to delete data");
   }
-  return response.json();
+  return result;
 };
 
 export const patchApi = async (endpoint, body) => {
@@ -88,12 +97,12 @@ export const patchApi = async (endpoint, body) => {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(body),
   });
-  if (!response.ok) {
-    throw new Error("Failed to patch data");
+  const result = await response.json();
+  if (!result.success) {
+    throw new Error(result.message || "Failed to patch data");
   }
-  return response.json();
+  return result;
 };
