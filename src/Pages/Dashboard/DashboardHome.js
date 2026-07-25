@@ -32,7 +32,7 @@ const DashboardHome = ({ orders, setOrders }) => {
         <div className="card my-4">
           <div className="card-header">
             <i className="fas fa-table mr-1"></i>
-            Manage Orders
+            &nbsp; Manage Orders: {orders?.length}
           </div>
           <div className="card-body">
             <div className="table-responsive-md">

@@ -17,7 +17,10 @@ export const useApi = (endpoint) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${apiUrl}${endpoint}`, { signal });
+        const response = await fetch(`${apiUrl}${endpoint}`, {
+          signal,
+          credentials: "include",
+        });
         const result = await response.json();
         if (isMounted) {
           if (result.success) {
@@ -58,6 +61,7 @@ export const postApi = async (endpoint, body) => {
       "content-type": "application/json",
     },
     body: JSON.stringify(body),
+    credentials: "include",
   });
   const result = await response.json();
   if (!result.success) {
@@ -73,6 +77,7 @@ export const putApi = async (endpoint, body) => {
       "content-type": "application/json",
     },
     body: JSON.stringify(body),
+    credentials: "include",
   });
   const result = await response.json();
   if (!result.success) {
@@ -84,6 +89,7 @@ export const putApi = async (endpoint, body) => {
 export const deleteApi = async (endpoint) => {
   const response = await fetch(`${apiUrl}${endpoint}`, {
     method: "DELETE",
+    credentials: "include",
   });
   const result = await response.json();
   if (!result.success) {
@@ -99,6 +105,7 @@ export const patchApi = async (endpoint, body) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
+    credentials: "include",
   });
   const result = await response.json();
   if (!result.success) {

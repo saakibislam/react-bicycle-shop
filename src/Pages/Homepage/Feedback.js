@@ -1,4 +1,4 @@
-import { Carousel, Container } from "react-bootstrap";
+import { Alert, Carousel, Container } from "react-bootstrap";
 import Loading from "../../components/Shared/Loading/Loading";
 import { useApi } from "../../hooks/api";
 
@@ -6,7 +6,7 @@ const Feedback = () => {
   const { data: reviews, loading, error } = useApi("/reviews");
 
   if (loading) return <Loading></Loading>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return <Alert variant="danger">{error.message}</Alert>;
 
   const slicedReviews = reviews?.length > 4 ? reviews.slice(0, 4) : reviews;
 

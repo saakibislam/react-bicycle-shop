@@ -1,4 +1,4 @@
-import { Col, Container, Row } from "react-bootstrap";
+import { Alert, Col, Container, Row } from "react-bootstrap";
 import Footer from "../../components/Shared/Footer/Footer";
 import Loading from "../../components/Shared/Loading/Loading";
 import Navigation from "../../components/Shared/Navigation/Navigation";
@@ -9,7 +9,7 @@ const Explore = () => {
   const { data: products, loading, error } = useApi("/products");
 
   if (loading) return <Loading></Loading>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return <Alert variant="danger">{error.message}</Alert>;
 
   return (
     <div>

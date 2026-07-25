@@ -6,7 +6,7 @@ import {
 } from "firebase/auth";
 import { useState } from "react";
 import { initializeAuthentication } from "../firebase/firebase.init";
-import { postApi } from "./api";
+import { apiUrl, postApi } from "./api";
 
 const useFirebase = () => {
   initializeAuthentication();
@@ -20,20 +20,22 @@ const useFirebase = () => {
   const auth = getAuth();
   const googleProvider = new GoogleAuthProvider();
 
+  const getErrorMessage = (error) =>
+    error instanceof TypeError && error.message === "Failed to fetch"
+      ? "Internal Server Error"
+      : error.message;
+
   // Register user with email and password
   const registerUser = async (email, password, name, history) => {
     setIsLoading(true);
     try {
       const data = await postApi("/users/register", { email, password, name });
-      if (data.message !== "User registered successfully") {
-        setAuthError(data.message);
-        throw new Error(data.message);
-      }
       setAuthError("");
       return data;
     } catch (error) {
-      setAuthError(error.message);
-      throw error;
+      const message = getErrorMessage(error);
+      setAuthError(message);
+      throw new Error(message);
     } finally {
       setIsLoading(false);
     }
@@ -52,8 +54,7 @@ const useFirebase = () => {
       history.push(destination);
       return user;
     } catch (error) {
-      setAuthError(error.message);
-      throw error;
+      setAuthError(getErrorMessage(error));
     } finally {
       setIsLoading(false);
     }
@@ -83,14 +84,23 @@ const useFirebase = () => {
   };
 
   //logout user
-  const logOut = () => {
+  const logOut = async () => {
     setIsLoading(true);
-    setUser({});
-    setAuthError("");
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("user");
-    signOut(auth);
-    setIsLoading(false);
+    try {
+      await fetch(`${apiUrl}/users/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch {
+      // Server unreachable — client-side cleanup still runs
+    } finally {
+      setUser({});
+      setAuthError("");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("user");
+      await signOut(auth).catch(() => {});
+      setIsLoading(false);
+    }
   };
 
   return {

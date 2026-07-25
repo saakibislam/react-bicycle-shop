@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { Alert, Button, Container, Form } from "react-bootstrap";
+import { Button, Container, Form } from "react-bootstrap";
+import Toaster from "../../../components/Shared/Toaster/Toaster";
 import { postApi } from "../../../hooks/api";
 
 const AddProduct = () => {
-  const [productData, setProductData] = useState();
+  const [productData, setProductData] = useState({});
   const [success, setSuccess] = useState(false);
+  const [toastShow, setToastShow] = useState(false);
+  const [toastMessage, setToastMessage] = useState({});
 
   const handleOnBlur = (e) => {
     const field = e.target.name;
@@ -18,17 +21,20 @@ const AddProduct = () => {
   const handleProductSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await postApi("/addProduct", productData);
-      if (data.insertedId) {
-        setSuccess(true);
-      }
+      const result = await postApi("/products", productData);
+      setSuccess(true);
+      setProductData({});
+      e.target.reset();
+      setToastMessage({ variant: "success", message: result.message });
+      setToastShow(true);
     } catch (error) {
-      console.error("Error adding product: ", error);
+      setToastMessage({ variant: "danger", message: error.message });
+      setToastShow(true);
     }
   };
   return (
     <Container className="w-75 mx-auto px-5 py-2 shadow">
-      {success && <Alert variant="info">Product Added Successfully</Alert>}
+      <Toaster toast={toastMessage} show={toastShow} setShow={setToastShow} />
       <h3 className="mb-5">Add a Product</h3>
       <Form onSubmit={handleProductSubmit}>
         <Form.Group
@@ -52,7 +58,7 @@ const AddProduct = () => {
           <Form.Control
             required
             type="text"
-            name="img"
+            name="image"
             onBlur={handleOnBlur}
             placeholder="Product Image Link"
           />
@@ -66,6 +72,7 @@ const AddProduct = () => {
             required
             type="number"
             name="price"
+            step="any"
             onBlur={handleOnBlur}
             placeholder="Product Price"
           />

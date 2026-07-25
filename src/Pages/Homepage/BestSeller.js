@@ -1,4 +1,4 @@
-import { Container, Row } from "react-bootstrap";
+import { Alert, Container, Row } from "react-bootstrap";
 import Loading from "../../components/Shared/Loading/Loading";
 import { useApi } from "../../hooks/api";
 import BestSellerCard from "./BestSellerCard";
@@ -7,7 +7,7 @@ const BestSeller = () => {
   const { data: products, loading, error } = useApi("/products");
 
   if (loading) return <Loading></Loading>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return <Alert variant="danger">{error.message}</Alert>;
 
   const slicedProducts = products?.slice(0, 4);
 
