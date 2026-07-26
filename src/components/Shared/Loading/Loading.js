@@ -1,5 +1,4 @@
 import { CDBContainer, CDBSpinner } from "cdbreact";
-import React from "react";
 
 const Loading = () => {
   return (

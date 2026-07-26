@@ -1,17 +1,16 @@
-import React from "react";
-import Footer from "../Shared/Footer/Footer";
-import Navigation from "../Shared/Navigation/Navigation";
+import Footer from "../../components/Shared/Footer/Footer";
+import Navigation from "../../components/Shared/Navigation/Navigation";
 import Banner from "./Banner";
-import BestSell from "./BestSell";
+import BestSeller from "./BestSeller";
 import Feedback from "./Feedback";
 import News from "./News";
 
-const Home = () => {
+const Homepage = () => {
   return (
     <>
       <Navigation></Navigation>
       <Banner></Banner>
-      <BestSell></BestSell>
+      <BestSeller></BestSeller>
       <Feedback></Feedback>
       <News></News>
       <Footer></Footer>
@@ -19,4 +18,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Homepage;

@@ -1,12 +1,13 @@
-import React, { useState } from "react";
-import { Alert, Container, Form, Row } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Alert, Button, Container, Form, Row } from "react-bootstrap";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import Footer from "../Shared/Footer/Footer";
-import Navigation from "../Shared/Navigation/Navigation";
-import useAuth from "../hooks/useAuth";
+import Footer from "../../components/Shared/Footer/Footer";
+import Navigation from "../../components/Shared/Navigation/Navigation";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
-  const { loginUser, loginWithGoogle, authError } = useAuth();
+  const { user, loginUser, loginWithGoogle, authError, setAuthError } =
+    useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const location = useLocation();
@@ -22,18 +23,27 @@ const Login = () => {
   const handleLoginWithGoogle = () => {
     loginWithGoogle(location, history);
   };
+
+  useEffect(() => {
+    // If the user object has an email (or _id), they are logged in
+    // Redirects to homepage and replaces the history entry
+    if (user && user.email) {
+      history.replace("/");
+    }
+  }, [user, history]);
+
   return (
     <div>
       <Navigation></Navigation>
       <Container>
         {/* Login Failed Alert  */}
         {authError && (
-          <Alert className="col-md-6 mx-auto" variant="danger">
+          <Alert className="col-md-6 mx-auto my-2" variant="danger">
             {authError}
           </Alert>
         )}
-        <Row className="col-md-6 mx-auto shadow py-2 my-5">
-          <form onSubmit={handleOnSubmit}>
+        <Row className="col-md-6 mx-auto shadow p-3 my-5">
+          <Form onSubmit={handleOnSubmit}>
             <h3 className="my-3">Log in</h3>
             <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
@@ -60,7 +70,7 @@ const Login = () => {
             <p>
               <small>
                 New User?{" "}
-                <Link to="/register">
+                <Link to="/register" onClick={() => setAuthError("")}>
                   <span className="text-success fw-bold">
                     Create an account
                   </span>
@@ -68,23 +78,29 @@ const Login = () => {
               </small>
             </p>
 
-            <div>
+            <div className="d-grid gap-2">
               {/* Normal Sign In  */}
-              <button
+              <Button
+                className="w-50 mx-auto"
+                variant="dark"
+                size="lg"
                 type="submit"
-                className="btn btn-dark btn-lg btn-block w-50 mx-auto my-2"
               >
-                Sign in
-              </button>
+                Sign In
+              </Button>
+
               {/* Google Sign In Button  */}
-              <button
+
+              <Button
+                className="w-50 mx-auto"
                 onClick={handleLoginWithGoogle}
-                className="btn btn-outline-dark btn-lg btn-block w-50 mx-auto my-2"
+                variant="outline-dark"
+                size="lg"
               >
-                Google Sign in
-              </button>
+                Google Sign In
+              </Button>
             </div>
-          </form>
+          </Form>
         </Row>
       </Container>
       <Footer></Footer>

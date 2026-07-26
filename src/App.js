@@ -1,18 +1,18 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import About from "./Pages/About/About";
-import Contact from "./Pages/Contact/Contact";
-import Dashboard from "./Pages/Dashboard/Dashboard";
-import Home from "./Pages/Home/Home";
-import NotFound from "./Pages/NotFound/NotFound";
-import Login from "./Pages/Login/Login";
-import Explore from "./Pages/Explore/Explore";
-import Register from "./Pages/Register/Register";
-import BicycleDetails from "./Pages/BicycleDetails/BicycleDetails";
-import PrivateRoute from "./Pages/PrivateRoute/PrivateRoute";
-import Success from "./Pages/Success/Success";
-import AuthProvider from "./Pages/AuthProvider/AuthProvider";
+import AuthProvider from "./components/AuthProvider/AuthProvider";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import About from "./pages/About/About";
+import Contact from "./pages/Contact/Contact";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Explore from "./pages/Explore/Explore";
+import Homepage from "./pages/Homepage/Homepage";
+import Login from "./pages/Login/Login";
+import NotFound from "./pages/NotFound/NotFound";
+import ProductDetails from "./pages/ProductDetails/ProductDetails";
+import Register from "./pages/Register/Register";
+import Success from "./pages/Success/Success";
 
 function App() {
   return (
@@ -21,16 +21,16 @@ function App() {
         <Router>
           <Switch>
             <Route exact path="/">
-              <Home></Home>
+              <Homepage></Homepage>
             </Route>
             <Route path="/home">
-              <Home></Home>
+              <Homepage></Homepage>
             </Route>
             <Route exact path="/explore">
               <Explore></Explore>
             </Route>
-            <PrivateRoute path="/explore/:id">
-              <BicycleDetails></BicycleDetails>
+            <PrivateRoute path="/product/:id">
+              <ProductDetails></ProductDetails>
             </PrivateRoute>
             <PrivateRoute path="/dashboard">
               <Dashboard></Dashboard>

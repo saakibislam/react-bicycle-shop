@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
-import useAuth from "../hooks/useAuth";
+import { postApi } from "../../hooks/api";
+import useAuth from "../../hooks/useAuth";
 
 const MakeReview = ({ orders }) => {
   const { user } = useAuth();
@@ -17,21 +18,16 @@ const MakeReview = ({ orders }) => {
     e.target.value = "";
   };
 
-  const handleReviewSubmit = (e) => {
+  const handleReviewSubmit = async (e) => {
     e.preventDefault();
-    fetch("https://bike-mania.onrender.com/reviews", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(reviewData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.insertedId) {
-          setSuccess(true);
-        }
-      });
+    try {
+      const data = await postApi("/reviews", reviewData);
+      if (data.insertedId) {
+        setSuccess(true);
+      }
+    } catch (error) {
+      console.error("Error submitting review: ", error);
+    }
   };
 
   return (

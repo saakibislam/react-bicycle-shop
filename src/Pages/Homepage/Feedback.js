@@ -1,34 +1,30 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Carousel, Container } from "react-bootstrap";
-import Loading from "../Shared/Loading/Loading";
+import { Alert, Carousel, Container } from "react-bootstrap";
+import Loading from "../../components/Shared/Loading/Loading";
+import { useApi } from "../../hooks/api";
 
 const Feedback = () => {
-  const [reviews, setReviews] = useState([]);
-  useEffect(() => {
-    axios
-      .get("https://bike-mania.onrender.com/reviews")
-      .then((res) => setReviews(res.data));
-    return () => setReviews([]);
-  }, []);
+  const { data: reviews, loading, error } = useApi("/reviews");
 
-  if (!reviews) return <Loading></Loading>;
+  if (loading) return <Loading></Loading>;
+  if (error) return <Alert variant="danger">{error.message}</Alert>;
+
+  const slicedReviews = reviews?.length > 4 ? reviews.slice(0, 4) : reviews;
 
   return (
     <Container className="py-5">
       <h1 className="display-6">What the buyers have to say ...</h1>
       <Carousel variant="dark" fade className="p-5">
-        {reviews?.map((review) => (
+        {slicedReviews?.map((review) => (
           <Carousel.Item key={review._id}>
             <div style={{ height: "300px" }}>
               <img
                 style={{ width: "100px" }}
                 className="mb-5 rounded-circle"
-                src={review.img}
+                src={review.image}
                 alt="User Avatar Cannot Load"
               />
               <h5>{review.name}</h5>
-              <p className="w-75 mx-auto">{review.description}</p>
+              <p className="w-75 mx-auto">{review.comment}</p>
             </div>
           </Carousel.Item>
         ))}
