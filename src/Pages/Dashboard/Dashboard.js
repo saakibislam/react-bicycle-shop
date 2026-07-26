@@ -46,11 +46,7 @@ const Dashboard = () => {
   return (
     <div style={{ display: "flex", height: "100vh" }}>
       {/* Sidebar  */}
-      <div
-        style={{
-          height: "100vh",
-        }}
-      >
+      <div>
         <CDBSidebar textColor="#fff" backgroundColor="#333">
           <CDBSidebarHeader
             prefix={<i className="fa fa-bars fa-large m-1"></i>}
