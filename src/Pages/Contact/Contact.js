@@ -7,7 +7,7 @@ import Toaster from "../../components/Shared/Toaster/Toaster";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const EMPTY_FORM = { email: "", subject: "", message: "" };
+const EMPTY_FORM = { name: "", email: "", subject: "", message: "" };
 
 const Contact = () => {
   const [form, setForm] = useState(EMPTY_FORM);
@@ -18,8 +18,10 @@ const Contact = () => {
 
   const validate = () => {
     const next = {};
+    if (!form.name.trim()) next.name = "Name is required.";
     if (!form.email.trim()) next.email = "Email is required.";
-    else if (!EMAIL_REGEX.test(form.email)) next.email = "Enter a valid email address.";
+    else if (!EMAIL_REGEX.test(form.email))
+      next.email = "Enter a valid email address.";
     if (!form.subject.trim()) next.subject = "Subject is required.";
     if (!form.message.trim()) next.message = "Message is required.";
     return next;
@@ -45,18 +47,26 @@ const Contact = () => {
         process.env.REACT_APP_EMAILJS_SERVICE_ID,
         process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
         {
+          from_name: form.name,
           from_email: form.email,
+          reply_to: form.email,
           subject: form.subject,
           message: form.message,
         },
-        process.env.REACT_APP_EMAILJS_PUBLIC_KEY
+        process.env.REACT_APP_EMAILJS_PUBLIC_KEY,
       );
       setForm(EMPTY_FORM);
       setErrors({});
-      setToastMessage({ variant: "success", message: "Message sent! We'll get back to you shortly." });
+      setToastMessage({
+        variant: "success",
+        message: "Message sent! We'll get back to you shortly.",
+      });
       setToastShow(true);
     } catch {
-      setToastMessage({ variant: "danger", message: "Failed to send message. Please try again." });
+      setToastMessage({
+        variant: "danger",
+        message: "Failed to send message. Please try again.",
+      });
       setToastShow(true);
     } finally {
       setIsSubmitting(false);
@@ -72,6 +82,20 @@ const Contact = () => {
         <Row>
           <Col className="col-md-6 mx-auto">
             <Form noValidate onSubmit={handleSubmit}>
+              <Form.Group className="mb-3">
+                <Form.Control
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  value={form.name}
+                  onChange={handleChange}
+                  isInvalid={!!errors.name}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.name}
+                </Form.Control.Feedback>
+              </Form.Group>
+
               <Form.Group className="mb-3">
                 <Form.Control
                   type="email"
