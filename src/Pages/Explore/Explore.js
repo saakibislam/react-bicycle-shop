@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Alert, Col, Container, Form, Row } from "react-bootstrap";
 import Footer from "../../components/Shared/Footer/Footer";
-import Loading from "../../components/Shared/Loading/Loading";
+import SkeletonCard from "../../components/Shared/Loading/SkeletonCard";
 import Navigation from "../../components/Shared/Navigation/Navigation";
 import { useApi } from "../../hooks/api";
 import ProductCard from "./ProductCard";
@@ -62,8 +62,42 @@ const Explore = () => {
     return result;
   }, [products, debouncedQuery, minPrice, maxPrice, sortBy]);
 
-  if (loading) return <Loading />;
-  if (error) return <Alert variant="danger">{error.message}</Alert>;
+  const renderGrid = () => {
+    if (loading) {
+      return (
+        <Row xs={1} sm={1} md={2} lg={3} className="gy-3 pb-4">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <Col key={i}>
+              <SkeletonCard />
+            </Col>
+          ))}
+        </Row>
+      );
+    }
+    if (error) return <Alert variant="danger">{error.message}</Alert>;
+    if (filteredProducts.length === 0) {
+      return (
+        <div className="text-center py-5">
+          <p className="fs-5 text-muted">No bikes match your search.</p>
+          <small className="text-muted">Try adjusting your filters.</small>
+        </div>
+      );
+    }
+    return (
+      <>
+        <p className="text-muted small mb-2">
+          Showing {filteredProducts.length} of {products.length} bikes
+        </p>
+        <Row xs={1} sm={1} md={2} lg={3} className="gy-3 pb-4">
+          {filteredProducts.map((product) => (
+            <Col key={product._id}>
+              <ProductCard product={product} />
+            </Col>
+          ))}
+        </Row>
+      </>
+    );
+  };
 
   return (
     <div>
@@ -78,6 +112,7 @@ const Explore = () => {
               placeholder="Search by name or description..."
               value={searchQuery}
               onChange={handleSearchChange}
+              disabled={loading}
             />
           </Col>
           <Col xs={6} md={2}>
@@ -87,6 +122,7 @@ const Explore = () => {
               min={0}
               value={minPrice}
               onChange={(e) => setMinPrice(e.target.value)}
+              disabled={loading}
             />
           </Col>
           <Col xs={6} md={2}>
@@ -96,12 +132,14 @@ const Explore = () => {
               min={0}
               value={maxPrice}
               onChange={(e) => setMaxPrice(e.target.value)}
+              disabled={loading}
             />
           </Col>
           <Col xs={12} md={3}>
             <Form.Select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
+              disabled={loading}
             >
               {SORT_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>
@@ -112,25 +150,7 @@ const Explore = () => {
           </Col>
         </Row>
 
-        {filteredProducts.length === 0 ? (
-          <div className="text-center py-5">
-            <p className="fs-5 text-muted">No bikes match your search.</p>
-            <small className="text-muted">Try adjusting your filters.</small>
-          </div>
-        ) : (
-          <>
-            <p className="text-muted small mb-2">
-              Showing {filteredProducts.length} of {products.length} bikes
-            </p>
-            <Row xs={1} sm={1} md={2} lg={3} className="gy-3 pb-4">
-              {filteredProducts.map((product) => (
-                <Col key={product._id}>
-                  <ProductCard product={product} />
-                </Col>
-              ))}
-            </Row>
-          </>
-        )}
+        {renderGrid()}
       </Container>
       <Footer />
     </div>
