@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Alert, Col, Container, Form, Row } from "react-bootstrap";
+import { Alert, Col, Container, Form, Pagination, Row } from "react-bootstrap";
 import Footer from "../../components/Shared/Footer/Footer";
 import SkeletonCard from "../../components/Shared/Loading/SkeletonCard";
 import Navigation from "../../components/Shared/Navigation/Navigation";
 import { useApi } from "../../hooks/api";
+import usePagination from "../../hooks/usePagination";
 import ProductCard from "./ProductCard";
+
+const PAGE_SIZE = 6;
 
 const SORT_OPTIONS = [
   { value: "default", label: "Default" },
@@ -62,6 +65,11 @@ const Explore = () => {
     return result;
   }, [products, debouncedQuery, minPrice, maxPrice, sortBy]);
 
+  const { page, setPage, totalPages, pageItems, start } = usePagination(
+    filteredProducts,
+    PAGE_SIZE
+  );
+
   const renderGrid = () => {
     if (loading) {
       return (
@@ -86,15 +94,37 @@ const Explore = () => {
     return (
       <>
         <p className="text-muted small mb-2">
-          Showing {filteredProducts.length} of {products.length} bikes
+          Showing {start + 1}–{Math.min(start + PAGE_SIZE, filteredProducts.length)} of{" "}
+          {filteredProducts.length} bikes
         </p>
         <Row xs={1} sm={1} md={2} lg={3} className="gy-3 pb-4">
-          {filteredProducts.map((product) => (
+          {pageItems.map((product) => (
             <Col key={product._id}>
               <ProductCard product={product} />
             </Col>
           ))}
         </Row>
+        {totalPages > 1 && (
+          <Pagination className="justify-content-center mt-3 pb-2">
+            <Pagination.Prev
+              onClick={() => setPage((p) => p - 1)}
+              disabled={page === 1}
+            />
+            {Array.from({ length: totalPages }, (_, i) => (
+              <Pagination.Item
+                key={i + 1}
+                active={page === i + 1}
+                onClick={() => setPage(i + 1)}
+              >
+                {i + 1}
+              </Pagination.Item>
+            ))}
+            <Pagination.Next
+              onClick={() => setPage((p) => p + 1)}
+              disabled={page === totalPages}
+            />
+          </Pagination>
+        )}
       </>
     );
   };
