@@ -16,6 +16,7 @@ const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 const ProductDetails = lazy(() => import("./pages/ProductDetails/ProductDetails"));
 const Register = lazy(() => import("./pages/Register/Register"));
 const Success = lazy(() => import("./pages/Success/Success"));
+const Profile = lazy(() => import("./pages/Profile/Profile"));
 
 function App() {
   return (
@@ -41,6 +42,9 @@ function App() {
               </PrivateRoute>
               <PrivateRoute path="/success">
                 <Success />
+              </PrivateRoute>
+              <PrivateRoute path="/profile">
+                <Profile />
               </PrivateRoute>
               <Route path="/login">
                 <Login />
