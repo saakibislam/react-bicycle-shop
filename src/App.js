@@ -1,59 +1,68 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Suspense, lazy } from "react";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import "./App.css";
 import AuthProvider from "./components/AuthProvider/AuthProvider";
+import Loading from "./components/Shared/Loading/Loading";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import About from "./pages/About/About";
-import Contact from "./pages/Contact/Contact";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import Explore from "./pages/Explore/Explore";
-import Homepage from "./pages/Homepage/Homepage";
-import Login from "./pages/Login/Login";
-import NotFound from "./pages/NotFound/NotFound";
-import ProductDetails from "./pages/ProductDetails/ProductDetails";
-import Register from "./pages/Register/Register";
-import Success from "./pages/Success/Success";
+
+const About = lazy(() => import("./pages/About/About"));
+const Contact = lazy(() => import("./pages/Contact/Contact"));
+const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
+const Explore = lazy(() => import("./pages/Explore/Explore"));
+const Homepage = lazy(() => import("./pages/Homepage/Homepage"));
+const Login = lazy(() => import("./pages/Login/Login"));
+const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
+const ProductDetails = lazy(() => import("./pages/ProductDetails/ProductDetails"));
+const Register = lazy(() => import("./pages/Register/Register"));
+const Success = lazy(() => import("./pages/Success/Success"));
+const Profile = lazy(() => import("./pages/Profile/Profile"));
 
 function App() {
   return (
     <div className="App">
       <AuthProvider>
         <Router>
-          <Switch>
-            <Route exact path="/">
-              <Homepage></Homepage>
-            </Route>
-            <Route path="/home">
-              <Homepage></Homepage>
-            </Route>
-            <Route exact path="/explore">
-              <Explore></Explore>
-            </Route>
-            <PrivateRoute path="/product/:id">
-              <ProductDetails></ProductDetails>
-            </PrivateRoute>
-            <PrivateRoute path="/dashboard">
-              <Dashboard></Dashboard>
-            </PrivateRoute>
-            <PrivateRoute path="/success">
-              <Success></Success>
-            </PrivateRoute>
-            <Route path="/login">
-              <Login></Login>
-            </Route>
-            <Route path="/register">
-              <Register></Register>
-            </Route>
-            <Route path="/about">
-              <About></About>
-            </Route>
-            <Route path="/contact">
-              <Contact></Contact>
-            </Route>
-            <Route path="*">
-              <NotFound></NotFound>
-            </Route>
-          </Switch>
+          <Suspense fallback={<Loading />}>
+            <Switch>
+              <Route exact path="/">
+                <Homepage />
+              </Route>
+              <Route path="/home">
+                <Homepage />
+              </Route>
+              <Route exact path="/explore">
+                <Explore />
+              </Route>
+              <PrivateRoute path="/product/:id">
+                <ProductDetails />
+              </PrivateRoute>
+              <PrivateRoute path="/dashboard">
+                <Dashboard />
+              </PrivateRoute>
+              <PrivateRoute path="/success">
+                <Success />
+              </PrivateRoute>
+              <PrivateRoute path="/profile">
+                <Profile />
+              </PrivateRoute>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/register">
+                <Register />
+              </Route>
+              <Route path="/about">
+                <About />
+              </Route>
+              <Route path="/contact">
+                <Contact />
+              </Route>
+              <Route path="*">
+                <NotFound />
+              </Route>
+            </Switch>
+          </Suspense>
         </Router>
       </AuthProvider>
     </div>
